@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+<body>
+<script>
+    parent.postMessage(location.href, location.origin);
+</script>
+</body>
+</html>
+
+<!-- This file is used by Keycloak for silent SingleSign-On check -->
+<!-- Loaded in a hidden iframe and sends the URL back to the parent window -->
+<!-- This way the user sees no redirect when checking if they are logged in -->
