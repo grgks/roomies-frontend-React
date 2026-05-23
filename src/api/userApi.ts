@@ -1,9 +1,9 @@
 import axiosInstance from '../services/axiosInstance';
-import type { ChangePassword,  User,  UserUpdate} from '@/types';
+import type { ChangePassword,  User,  UserUpdate, UserInsert} from '@/types';
 
 // POST /api/users/me - sync user with backend after first login
-export const syncCreateUser = async (): Promise<User> => {
-    const response = await axiosInstance.post('/api/users/me');
+export const syncCreateUser = async (data: UserInsert): Promise<User> => {
+    const response = await axiosInstance.post('/api/users/me', data);
     return response.data;
 };
 
