@@ -24,6 +24,29 @@ export const UserUpdate = User.omit({ id: true,
     });
 export type UserUpdate = z.infer<typeof UserUpdate>;
 
+// UserInsert
+export const UserInsert = z.object({
+    phoneNumber: z.string().regex(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+});
+export type UserInsert = z.infer<typeof UserInsert>;
+
+// UserAdminUpdate
+export const UserAdminUpdate = z.object({
+    id: z.number().int().optional(),
+    keycloakId: z.string().optional(),
+    email: z.email(),
+    phoneNumber: z.string().regex(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
+    isActive: z.boolean().optional(),
+});
+export type UserAdminUpdate = z.infer<typeof UserAdminUpdate>;
+
+// UserFilters
+export const UserFilters = z.object({
+    email: z.string().optional(),
+    phoneNumber: z.string().optional(),
+    isActive: z.boolean().optional(),
+});
+export type UserFilters = z.infer<typeof UserFilters>;
 
 //ChangePassword
 export const ChangePassword = z.object({
