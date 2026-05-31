@@ -14,6 +14,7 @@ export const House = z.object({
     cityName: z.string().optional(),
     ownerFullName: z.string().optional(),
     currentRoommates: z.number().int().optional(),
+    averageRating: z.number().optional(),
     createdAt: z.iso.datetime(),
     updatedAt: z.iso.datetime(),
 });
