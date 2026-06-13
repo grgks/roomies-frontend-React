@@ -35,3 +35,9 @@ export const changePassword = async (data: ChangePassword): Promise<string> =>{
     const response = await axiosInstance.put('/api/users/me/password', data);
     return response.data.message;
 }
+
+// PATCH /api/users/me/avatar - update avatar
+export const updateAvatar = async (avatarId: string): Promise<User> => {
+    const response = await axiosInstance.patch('/api/users/me/avatar', { avatarId });
+    return response.data;
+};
