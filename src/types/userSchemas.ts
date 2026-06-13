@@ -7,6 +7,7 @@ export const User = z.object({
     id: z.number().int(),
     keycloakId: z.string(),
     email: z.email(),
+    avatarId: z.string(),
     phoneNumber: z.string(),
     isActive: z.boolean(),
     createdAt: z.iso.datetime(),
