@@ -1,17 +1,71 @@
 import axios from 'axios';
-import keycloak from './keycloakService';
 
+
+// withCredentials: true — browser automatically sends httpOnly cookies with every request
+// No token handling needed — backend reads JWT from cookie via CookieBearerTokenResolver
 const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
+    withCredentials: true,
 });
 
-// Interceptor — adds auto το token at every request
-axiosInstance.interceptors.request.use(async (config) => {
-    if (keycloak.isTokenExpired(30)) {
-        await keycloak.updateToken(30);
+// Response interceptor - handles token refresh on 401
+// Flow: request -> 401 -> refresh token -> retry original request
+// If refresh fails -> logout (cookies cleared)
+let isRefreshing = false;
+let failedQueue: Array<{
+    resolve: (value: unknown) => void;
+    reject: (reason?: unknown) => void;
+}> = [];
+
+const processQueue = (error: unknown) => {
+    failedQueue.forEach(promise => {
+        if (error) {
+            promise.reject(error);
+        } else {
+            promise.resolve(null);
+        }
+    });
+    failedQueue = [];
+};
+
+axiosInstance.interceptors.response.use(
+    response => response,
+    async error => {
+        const originalRequest = error.config;
+
+        // Avoid infinite loop - don't retry refresh endpoint itself
+        if (error.response?.status === 401 && !originalRequest._retry &&
+            !originalRequest.url?.includes('/api/auth/')) {
+
+            if (isRefreshing) {
+                // Queue requests while refresh is in progress
+                return new Promise((resolve, reject) => {
+                    failedQueue.push({ resolve, reject });
+                }).then(() => axiosInstance(originalRequest))
+                    .catch(err => Promise.reject(err));
+            }
+
+            originalRequest._retry = true;
+            isRefreshing = true;
+
+            try {
+                // Refresh token - backend sets new access_token cookie
+                await axiosInstance.post('/api/auth/refresh');
+                processQueue(null);
+                return axiosInstance(originalRequest);
+            } catch (refreshError) {
+                // Refresh failed - logout user
+                processQueue(refreshError);
+                await axiosInstance.post('/api/auth/logout');
+                window.location.href = '/login';
+                return Promise.reject(refreshError);
+            } finally {
+                isRefreshing = false;
+            }
+        }
+
+        return Promise.reject(error);
     }
-    config.headers.Authorization = `Bearer ${keycloak.token}`;
-    return config;
-});
+);
 
 export default axiosInstance;
