@@ -8,6 +8,8 @@ interface AuthContextType {
     roommateId: number | null;
     houseId: number | null;
     avatarId: string | null;
+    isAdmin: boolean;
+    isSuperAdmin: boolean;
     login: () => void;
     logout: () => void;
     refreshAuth: () => Promise<void>;

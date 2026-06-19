@@ -7,8 +7,9 @@ export const KEYCLOAK_REALM = import.meta.env.VITE_KEYCLOAK_REALM as string;
 export const KEYCLOAK_CLIENT_ID = import.meta.env.VITE_KEYCLOAK_CLIENT_ID as string;
 
 // Roles
-export const ROLE_ADMIN = 'ADMIN';
-export const ROLE_USER = 'USER';
+export const ROLE_SUPER_ADMIN = 'SUPER_ADMIN';
+export const ROLE_LIGHT_ADMIN = 'LIGHT_ADMIN';
+export const ROLE_ROOMMATE = 'ROOMMATE';
 
 // Pagination
 export const DEFAULT_PAGE_SIZE = 10;

@@ -14,3 +14,4 @@ export * from './invitationSchemas';
 export * from './ratingSchemas';
 export * from './messageSchemas';
 export * from './staticSchemas';
+export * from './commonSchemas';

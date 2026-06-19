@@ -1,8 +1,8 @@
 import axiosInstance from '@/services/axiosInstance';
-import type { User, UserAdminUpdate, UserFilters } from '@/types';
+import type { User, UserAdminUpdate, UserFilters, PagedResponse } from '@/types';
 
 // GET /api/admin/users - get all users with filters
-export const getAllUsers = async (filters: UserFilters): Promise<User[]> => {
+export const getAllUsers = async (filters: UserFilters): Promise<PagedResponse<User>> => {
     const response = await axiosInstance.get('/api/admin/users', { params: filters });
     return response.data;
 };

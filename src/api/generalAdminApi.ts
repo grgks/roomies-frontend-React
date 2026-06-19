@@ -8,6 +8,7 @@ import type {
     Message, MessageFilters,
     City, CityInsert, CityUpdate,
     Area, AreaInsert, AreaUpdate,
+    PagedResponse,
 } from '@/types';
 
 // House
@@ -29,7 +30,7 @@ export const adminChangeHouseOwner = async (houseId: number, newOwnerId: number)
 };
 
 // GET /api/admin/houses - get all houses
-export const adminGetAllHouses = async (filters: HouseFilters): Promise<House[]> => {
+export const adminGetAllHouses = async (filters: HouseFilters): Promise<PagedResponse<House>> => {
     const res = await axiosInstance.get('/api/admin/houses', { params: filters });
     return res.data;
 };
@@ -42,7 +43,7 @@ export const adminFindEmptyHouses = async (): Promise<House[]> => {
 
 // Task
 // GET /api/admin/tasks - get all tasks
-export const adminGetAllTasks = async (filters: TaskFilters): Promise<Task[]> => {
+export const adminGetAllTasks = async (filters: TaskFilters): Promise<PagedResponse<Task>> => {
     const res = await axiosInstance.get('/api/admin/tasks', { params: filters });
     return res.data;
 };
@@ -54,7 +55,7 @@ export const adminDeleteTask = async (id: number): Promise<void> => {
 
 // Expense
 // GET /api/admin/expenses - get all expenses
-export const adminGetAllExpenses = async (filters: ExpenseFilters): Promise<Expense[]> => {
+export const adminGetAllExpenses = async (filters: ExpenseFilters): Promise<PagedResponse<Expense>> => {
     const res = await axiosInstance.get('/api/admin/expenses', { params: filters });
     return res.data;
 };
@@ -66,7 +67,7 @@ export const adminDeleteExpense = async (id: number): Promise<void> => {
 
 // Rating
 // GET /api/admin/ratings - get all ratings
-export const adminGetAllRatings = async (filters: RatingFilters): Promise<Rating[]> => {
+export const adminGetAllRatings = async (filters: RatingFilters): Promise<PagedResponse<Rating>> => {
     const res = await axiosInstance.get('/api/admin/ratings', { params: filters });
     return res.data;
 };
@@ -78,7 +79,7 @@ export const adminDeleteRating = async (id: number): Promise<void> => {
 
 // Invitation
 // GET /api/admin/invitations - get all invitations
-export const adminGetAllInvitations = async (filters: InvitationFilters): Promise<Invitation[]> => {
+export const adminGetAllInvitations = async (filters: InvitationFilters): Promise<PagedResponse<Invitation>> => {
     const res = await axiosInstance.get('/api/admin/invitations', { params: filters });
     return res.data;
 };
@@ -90,7 +91,7 @@ export const adminDeleteInvitation = async (id: number): Promise<void> => {
 
 // Message
 // GET /api/admin/messages - get all messages
-export const adminGetAllMessages = async (filters: MessageFilters): Promise<Message[]> => {
+export const adminGetAllMessages = async (filters: MessageFilters): Promise<PagedResponse<Message>> => {
     const res = await axiosInstance.get('/api/admin/messages', { params: filters });
     return res.data;
 };

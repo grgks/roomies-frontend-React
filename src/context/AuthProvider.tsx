@@ -16,6 +16,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [houseId, setHouseId] = useState<number | null>(null);
     const [avatarId, setAvatarId] = useState<string | null>(null);
 
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+
     useEffect(() => {
         keycloak
             .init({
@@ -89,6 +92,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     }
 
                     setUserEmail(keycloak.tokenParsed?.email);
+                    const roles = (keycloak.tokenParsed as { realm_access?: { roles?: string[] } })
+                        ?.realm_access?.roles ?? [];
+
+                    setIsSuperAdmin(roles.includes('SUPER_ADMIN'));
+                    setIsAdmin(roles.includes('SUPER_ADMIN') || roles.includes('LIGHT_ADMIN'));
                     setIsAuthenticated(true);
                 }
                 setIsLoading(false);
@@ -126,6 +134,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         <AuthContext.Provider value={{
             isAuthenticated, isLoading, userEmail,
             hasRoommate, roommateId, houseId, avatarId,
+            isAdmin, isSuperAdmin,
              login, logout, refreshAuth
         }}>
             {children}
