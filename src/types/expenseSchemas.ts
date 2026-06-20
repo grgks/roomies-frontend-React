@@ -7,6 +7,7 @@ export const ExpenseSplit = z.object({
     roommateId: z.number().int(),
     amount: z.number(),
     isPaid: z.boolean(),
+    isWrittenOff: z.boolean(),
     createdAt: z.iso.datetime(),
     updatedAt: z.iso.datetime(),
 });
