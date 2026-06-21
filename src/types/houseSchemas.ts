@@ -1,4 +1,5 @@
 import z from "zod";
+import {PaginationParams} from "@/types/commonSchemas.ts";
 
 //House
 export const House = z.object({
@@ -43,7 +44,7 @@ export const HouseUpdate =
 export type HouseUpdate = z.infer<typeof HouseUpdate>;
 
 //HouseFilters
-export const HouseFilters = z.object({
+export const HouseFilters = PaginationParams.extend({
     address: z.string().optional(),
     addressNumber: z.string().optional(),
     apartment: z.string().optional(),

@@ -1,5 +1,6 @@
 import z from "zod";
 import {TaskCategory, TaskStatus} from "@/types/enums.ts";
+import {PaginationParams} from "@/types/commonSchemas.ts";
 
 // Task
 export const Task =  z.object({
@@ -35,7 +36,7 @@ export const TaskUpdate = z.object({
 export type TaskUpdate = z.infer<typeof TaskUpdate>;
 
 //TaskFilters
-export const TaskFilters = z.object({
+export const TaskFilters = PaginationParams.extend({
     taskStatus: z.enum(Object.values(TaskStatus) as
         [string, ...string[]]).optional(),
     taskCategory: z.enum(Object.values(TaskCategory) as

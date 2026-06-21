@@ -1,4 +1,5 @@
 import z from "zod";
+import {PaginationParams} from "@/types/commonSchemas.ts";
 
 //ExpenseSplit
 export const ExpenseSplit = z.object({
@@ -42,7 +43,7 @@ export const ExpenseUpdate = ExpenseInsert.omit({
 export type ExpenseUpdate = z.infer<typeof ExpenseUpdate>;
 
 //ExpenseFilters
-export const ExpenseFilters = z.object({
+export const ExpenseFilters = PaginationParams.extend({
     description: z.string().optional(),
     houseId: z.number().int().optional(),
     paidById: z.number().int().optional(),

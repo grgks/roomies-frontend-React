@@ -1,5 +1,6 @@
 import z from "zod";
 import {InvitationStatus} from "@/types/enums.ts";
+import {PaginationParams} from "@/types/commonSchemas.ts";
 
 //Invitation
 export const Invitation = z.object({
@@ -24,9 +25,10 @@ export const InvitationInsert = z.object({
 });
 export type InvitationInsert = z.infer<typeof InvitationInsert>;
 
-export const InvitationFilters = z.object({
+export const InvitationFilters = PaginationParams.extend({
     status: z.enum(Object.values(InvitationStatus) as [string, ...string[]]).optional(),
     fromRoommateId: z.number().int().optional(),
     toRoommateId: z.number().int().optional(),
+    houseId: z.number().int().optional(),
 });
 export type InvitationFilters = z.infer<typeof InvitationFilters>;

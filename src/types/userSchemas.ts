@@ -1,4 +1,5 @@
 import {z} from "zod";
+import { PaginationParams } from './commonSchemas';
 
 
 
@@ -42,7 +43,7 @@ export const UserAdminUpdate = z.object({
 export type UserAdminUpdate = z.infer<typeof UserAdminUpdate>;
 
 // UserFilters
-export const UserFilters = z.object({
+export const UserFilters = PaginationParams.extend({
     email: z.string().optional(),
     phoneNumber: z.string().optional(),
     isActive: z.boolean().optional(),
@@ -55,3 +56,9 @@ export const ChangePassword = z.object({
     newPassword: z.string(),
 });
 export type ChangePassword = z.infer<typeof ChangePassword>;
+
+//AdminPasswordReset
+export const AdminPasswordReset = z.object({
+    newPassword: z.string().min(8, "Password must be at least 8 characters"),
+});
+export type AdminPasswordReset = z.infer<typeof AdminPasswordReset>;
