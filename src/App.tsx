@@ -1,7 +1,12 @@
-import AppRouter from './routes/AppRouter';
+import AppRouter from "@/routes/AppRouter.tsx";
 
-const App = () => {
-  return <AppRouter />;
-};
+
+function App()  {
+  return (
+      <>
+          <AppRouter />;
+      </>
+  )
+}
 
 export default App;
