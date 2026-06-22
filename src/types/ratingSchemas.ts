@@ -1,5 +1,6 @@
 import {z} from "zod";
 import {RatingCategory} from "@/types/enums.ts";
+import {PaginationParams} from "@/types/commonSchemas.ts";
 
 
 //Rating
@@ -25,7 +26,7 @@ export const RatingInsert = z.object({
 export type RatingInsert = z.infer<typeof RatingInsert>;
 
 //RatingFilters
-export const RatingFilters = z.object({
+export const RatingFilters = PaginationParams.extend({
     fromRoommateId: z.number().int().optional(),
     toRoommateId: z.number().int().optional(),
     category: z.enum(Object.values(RatingCategory) as [string, ...string[]]).optional(),

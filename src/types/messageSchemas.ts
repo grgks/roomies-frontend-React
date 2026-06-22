@@ -1,4 +1,5 @@
 import z from "zod";
+import {PaginationParams} from "@/types/commonSchemas.ts";
 
 //Message
 export const Message = z.object({
@@ -23,7 +24,7 @@ export const MessageInsert = z.object({
 export type MessageInsert = z.infer<typeof MessageInsert>;
 
 //MessageFilters
-export const MessageFilters = z.object({
+export const MessageFilters = PaginationParams.extend({
     fromRoommateId: z.number().int().optional(),
     toRoommateId: z.number().int().optional(),
     houseId: z.number().int().optional(),
