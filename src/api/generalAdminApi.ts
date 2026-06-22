@@ -8,7 +8,8 @@ import type {
     Message, MessageFilters,
     City, CityInsert, CityUpdate,
     Area, AreaInsert, AreaUpdate,
-    PagedResponse,
+    PagedResponse, AdminRoommate,
+    RoommateAdminUpdate
 } from '@/types';
 
 // House
@@ -38,6 +39,40 @@ export const adminGetAllHouses = async (filters: HouseFilters): Promise<PagedRes
 // GET /api/admin/houses/empty - find empty houses
 export const adminFindEmptyHouses = async (): Promise<House[]> => {
     const res = await axiosInstance.get('/api/admin/houses/empty');
+    return res.data;
+};
+
+//Roommates
+
+// GET /api/admin/houses/{houseId}/roommates - get roommates by house
+export const adminGetRoommatesByHouse = async (houseId: number): Promise<AdminRoommate[]> => {
+    const res = await axiosInstance.get(`/api/admin/houses/${houseId}/roommates`);
+    return res.data;
+};
+
+// DELETE /api/admin/houses/{houseId}/roommates/{roommateId} - remove roommate from house
+export const adminRemoveRoommateFromHouse = async (
+    houseId: number,
+    roommateId: number,
+    forceWriteOff: boolean = false
+): Promise<void> => {
+    await axiosInstance.delete(`/api/admin/houses/${houseId}/roommates/${roommateId}`, {
+        params: { forceWriteOff },
+    });
+};
+
+// PUT /api/admin/roommates/{roommateId} - update roommate details
+export const adminUpdateRoommate = async (
+    roommateId: number,
+    data: RoommateAdminUpdate
+): Promise<AdminRoommate> => {
+    const res = await axiosInstance.put(`/api/admin/roommates/${roommateId}`, data);
+    return res.data;
+};
+
+// GET /api/admin/roommates/without-house , get roommates without a house
+export const adminGetRoommatesWithoutHouse = async (): Promise<AdminRoommate[]> => {
+    const res = await axiosInstance.get('/api/admin/roommates/without-house');
     return res.data;
 };
 
