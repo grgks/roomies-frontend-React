@@ -12,3 +12,10 @@ export const AdminRoommate = z.object({
     updatedAt: z.iso.datetime(),
 });
 export type AdminRoommate = z.infer<typeof AdminRoommate>;
+
+export const RoommateAdminUpdate = z.object({
+    firstname: z.string().min(1, "Firstname is required"),
+    lastname: z.string().min(1, "Lastname is required"),
+    gender: z.enum(Object.values(Gender) as [string, ...string[]]),
+});
+export type RoommateAdminUpdate = z.infer<typeof RoommateAdminUpdate>;
