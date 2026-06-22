@@ -28,6 +28,12 @@ export const rejectInvitation =
         return res.data;
     }
 
+// PUT /api/invitations/{id}/cancel - sender cancels their own pending invitation
+export const cancelInvitation = async (id: number): Promise<Invitation> => {
+    const res = await axiosInstance.put(`/api/invitations/${id}/cancel`);
+    return res.data;
+};
+
 //GET  /api/invitations/incoming - get my incoming invitations
 export const getMyIncomingInvitations =
     async(filters: InvitationFilters): Promise<Invitation[]> =>{
