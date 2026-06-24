@@ -37,3 +37,11 @@ export const AVATARS = [
     { id: 'avatar_9',  url: 'https://api.dicebear.com/7.x/personas/svg?seed=Riley' },
     { id: 'avatar_10', url: 'https://api.dicebear.com/7.x/personas/svg?seed=Drew' },
 ] as const;
+
+export const PRIVACY_POLICY_LAST_UPDATED = {
+    el: "Ιούνιος 2026",
+    en: "June 2026",
+};
+
+export const APPLICATION_EMAIL = "roomies@example.com";
+export const CREATOR_GITHUB_URL = "github.com/grgks";
