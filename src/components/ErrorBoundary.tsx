@@ -1,5 +1,5 @@
 import { Component, type ReactNode } from 'react';
-import type {WithTranslation} from "react-i18next";
+import {withTranslation, type WithTranslation} from "react-i18next";
 
 interface Props extends WithTranslation{
     children: ReactNode;
@@ -38,4 +38,4 @@ class ErrorBoundary extends Component<Props, State> {
     }
 }
 
-export default ErrorBoundary;
+export default withTranslation()(ErrorBoundary);
