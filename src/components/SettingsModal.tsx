@@ -13,13 +13,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import useAuth from '@/hooks/useAuth';
 import { getCurrentRoommate, updateRoommateMe } from '@/api/roommateApi';
-import { getMe } from '@/api/userApi';
+import {getMe} from '@/api/userApi';
 import { changeUserPassword, updateUserAvatar } from '@/services/userService';
 import { useTranslation } from 'react-i18next';
 import { AVATARS } from '@/utils/constants';
 import { Gender } from '@/types/enums';
-import { RoommateUpdate } from '@/types';
+import {RoommateUpdate} from '@/types';
 import type { Roommate } from '@/types';
+// import ConfirmDeleteModal from "@/components/ConfirmDeleteModal.tsx";
 
 const ChangePasswordSchema = z.object({
     currentPassword: z.string().min(1, 'Required'),
@@ -43,6 +44,8 @@ const SettingsModal = () => {
     const [showProfileForm, setShowProfileForm] = useState(false);
     const [profileSuccess, setProfileSuccess] = useState(false);
     const [profileError, setProfileError] = useState<string | null>(null);
+
+
 
     const { logout, userEmail } = useAuth();
 
@@ -145,6 +148,15 @@ const SettingsModal = () => {
             setProfileError(t('couldNotUpdateProfile'));
         }
     };
+
+    // const handleDeactivateAccount = async () => {
+    //     try {
+    //         await deleteMe();
+    //         setTimeout(() => logout(), 500);
+    //     } catch (err) {
+    //         console.error('Deactivate failed:', err);
+    //     }
+    // };
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
@@ -374,6 +386,20 @@ const SettingsModal = () => {
                             className="text-xs px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition cursor-pointer">
                             {i18n.language === 'el' ? 'EN' : 'EL'}
                         </button>
+                    </div>
+
+                    {/* Deactivate Account */}
+                    <div className="flex items-center justify-between py-2 border-t">
+                        <div className="flex items-center gap-3">
+                            <UserIcon size={16} className="text-orange-400" />
+                            <p className="text-sm font-medium text-slate-700">{t('deactivateAccount')}</p>
+                        </div>
+                        {/*<ConfirmDeleteModal*/}
+                        {/*    onConfirm={handleDeactivateAccount}*/}
+                        {/*    title={t('deactivateAccount')}*/}
+                        {/*    message={t('deactivateAccountWarning') || 'Are you sure? This will deactivate your account.'}*/}
+                        {/*    triggerIcon={<span className="text-xs px-3 py-1.5 rounded-lg bg-orange-50 hover:bg-orange-100 text-orange-500 transition cursor-pointer">{t('deactivate')}</span>}*/}
+                        {/*/>*/}
                     </div>
 
                     {/* Logout */}

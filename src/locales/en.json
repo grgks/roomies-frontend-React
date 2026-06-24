@@ -262,5 +262,8 @@
   "phoneNumberMustBe10Digits": "Phone number must be exactly 10 digits",
   "min3Characters": "Min 3 characters",
   "max15Characters": "Max 15 characters",
-  "searchRoommates": "Search Roommates"
+  "searchRoommates": "Search Roommates",
+  "deleteHouse": "Delete House",
+  "deleteHouseConfirmMessage": "Are you sure? This will permanently delete the house and all related data.",
+  "deactivateAccount": "Deactivate Account"
 }

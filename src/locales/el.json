@@ -263,6 +263,9 @@
   "phoneNumberMustBe10Digits": "Ο αριθμός τηλεφώνου πρέπει να έχει ακριβώς 10 ψηφία",
   "min3Characters": "Ελάχιστο 3 χαρακτήρες",
   "max15Characters": "Μέγιστο 15 χαρακτήρες",
-  "searchRoommates": "Αναζήτησε Συγκατοίκους"
+  "searchRoommates": "Αναζήτησε Συγκατοίκους",
+  "deleteHouse": "Διαγραφή Σπιτιού",
+  "deleteHouseConfirmMessage": "Είσαι σίγουρος; Αυτό θα διαγράψει το σπίτι και όλα τα σχετικά δεδομένα μόνιμα.",
+  "deactivateAccount": "Απενεργοποίηση Λογαριασμού"
 
 }
