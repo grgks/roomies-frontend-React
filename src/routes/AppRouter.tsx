@@ -119,11 +119,16 @@ const AppRouter = () => {
                 <AdminRoute><AdminRoommatesWithoutHousePage /></AdminRoute>
             } />
 
+
+            {/* Root redirect */}
             <Route path="*" element={
-                isAuthenticated && hasRoommate === false
-                    ? <Navigate to="/complete-profile" />
-                    : <NotFoundPage />
+                !isAuthenticated ? <Navigate to="/login" /> :
+                    hasRoommate === false ? <Navigate to="/complete-profile" /> :
+                        <Navigate to="/dashboard" />
             } />
+
+            {/* Catch-all 404 */}
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>
     );
 };
