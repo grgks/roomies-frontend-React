@@ -15,13 +15,13 @@ import {
     adminDeleteTask,
     adminDeleteExpense,
     adminGetRoommatesByHouse,
-    adminRemoveRoommateFromHouse, adminGetAllInvitations, adminDeleteInvitation,
+    adminRemoveRoommateFromHouse, adminGetAllInvitations, adminDeleteInvitation, adminDeleteHouse,
 } from '@/api/generalAdminApi';
 import type {
     House, HouseFilters, Task, Expense,
     AdminRoommate, City, Area, Invitation,
 } from '@/types';
-import { Users, ChevronDown, ChevronUp, UserMinus, UserCog } from 'lucide-react';
+import {Users, ChevronDown, ChevronUp, UserMinus, UserCog, Trash2} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import AddCityModal from "@/components/AddCityModal.tsx";
@@ -281,6 +281,20 @@ const AdminDashboardPage = () => {
                                             >
                                                 {expandedHouseId === house.id ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                                             </button>
+                                        </td>
+
+                                        {/* delete house */}
+                                        <td className="px-5 py-3">
+                                            <ConfirmDeleteModal
+                                                onConfirm={async () => {
+                                                    await adminDeleteHouse(house.id);
+                                                    setHouses(prev => prev.filter(h => h.id !== house.id));
+                                                    setExpandedHouseId(null);
+                                                }}
+                                                title={t('deleteHouse') || 'Delete House'}
+                                                message={t('deleteHouseConfirmMessage') || 'Are you sure? This will permanently delete the house and all related data.'}
+                                                triggerIcon={<Trash2 size={16} className="text-red-400" />}
+                                            />
                                         </td>
                                     </tr>
 
