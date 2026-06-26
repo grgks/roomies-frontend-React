@@ -9,6 +9,7 @@ interface PageTableProps {
     children: ReactNode;
     tableId?: string;
     maxHeight?: string;
+    minWidth?: string;
 }
 
 const colorMap = {
@@ -39,7 +40,15 @@ const colorMap = {
     },
 };
 
-const PageTable = ({ title, color, columns, emptyMessage = "No data yet.", isEmpty, children, tableId, maxHeight }: PageTableProps) => {
+const PageTable = ({ title,
+                       color,
+                       columns,
+                       emptyMessage = "No data yet.",
+                       isEmpty,
+                       children,
+                       tableId, maxHeight,
+                       minWidth = "640px",
+                   }: PageTableProps) => {
     const colors = colorMap[color];
 
     return (
@@ -50,12 +59,19 @@ const PageTable = ({ title, color, columns, emptyMessage = "No data yet.", isEmp
             {isEmpty ? (
                 <p className="text-slate-400 text-center py-8">{emptyMessage}</p>
             ) : (
-                <div style={maxHeight ? { maxHeight, overflowY: 'auto' } : undefined}>
-                    <table className="w-full text-sm">
-                        <thead className={`${colors.subheader} sticky top-0`}>
+                <div
+                    className="overflow-x-auto"
+                    style={{
+                        maxHeight: maxHeight ?? undefined,
+                        overflowY: maxHeight ? "auto" : undefined,
+                        WebkitOverflowScrolling: "touch",
+                    }}
+                >
+                    <table className="w-full text-sm" style={{ minWidth }}>
+                        <thead className={`${colors.subheader} sticky top-0 z-10`}>
                         <tr>
                             {columns.map((col, i) => (
-                                <th key={col || `col-${i}`} className={`px-5 py-3 text-left font-medium ${colors.text}`}>
+                                <th key={col || `col-${i}`} className={`px-5 py-3 text-left font-medium whitespace-nowrap ${colors.text}`}>
                                     {col}
                                 </th>
                             ))}

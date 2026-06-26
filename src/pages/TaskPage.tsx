@@ -227,7 +227,7 @@ const TaskPage = ( ) => {
                     </div>
 
                     <div className="flex justify-start">
-                        <Button variant="outline" onClick={() => navigate('/dashboard')}>Back</Button>
+                        <Button variant="outline" onClick={() => navigate('/dashboard')}>{t('back')}</Button>
                     </div>
                 </div>
             </div>

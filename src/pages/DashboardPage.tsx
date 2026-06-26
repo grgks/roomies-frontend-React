@@ -41,7 +41,14 @@ const DashboardPage = () => {
                 style={{backgroundImage: "url('/room.jpg')" }}>
 
                 {/* Flame overlay */}
-                <FireAnimation bottom="29%" left="49%" />
+                {/* mobile: tuned for narrow screens */}
+                <div className="md:hidden">
+                    <FireAnimation bottom="28%" left="35%" />
+                </div>
+                {/* desktop: original position */}
+                <div className="hidden md:block">
+                    <FireAnimation bottom="29%" left="49%" />
+                </div>
 
                 {/*Mirror info*/}
                 {houseId !== null && house && (
