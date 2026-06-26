@@ -266,6 +266,8 @@
   "searchRoommates": "Αναζήτησε Συγκατοίκους",
   "deleteHouse": "Διαγραφή Σπιτιού",
   "deleteHouseConfirmMessage": "Είσαι σίγουρος; Αυτό θα διαγράψει το σπίτι και όλα τα σχετικά δεδομένα μόνιμα.",
-  "deactivateAccount": "Απενεργοποίηση Λογαριασμού"
+  "deactivateAccount": "Απενεργοποίηση Λογαριασμού",
+  "saveChanges": "Αποθήκευση Αλλαγών",
+  "optional": "Προαιρετικό"
 
 }

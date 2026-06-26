@@ -174,7 +174,7 @@ const AdminDashboardPage = () => {
 
     return (
         <Layout>
-            <div className="min-h-screen bg-slate-100 p-6 pb-16">
+            <div className="min-h-screen bg-gray-400 p-6 pb-16">
                 <div className="max-w-6xl mx-auto flex flex-col gap-6">
 
                     {/* Nav row */}

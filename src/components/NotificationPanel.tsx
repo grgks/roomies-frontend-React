@@ -45,7 +45,7 @@ const NotificationPanel = ({ open, onClose }: NotificationPanelProps) => {
             <div className="fixed inset-0 z-40" onClick={onClose} />
 
             {/* Panel */}
-            <div className="absolute right-0 top-12 w-80 bg-white rounded-xl shadow-xl border border-slate-100 z-50 overflow-hidden">
+            <div className="absolute -right-5 top-15 w-65 max-w-[90vw] bg-slate-300 rounded-xl shadow-xl border border-slate-100 z-50 overflow-hidden">
                 <div className="flex items-center justify-between px-4 py-3 border-b">
                     <div className="flex items-center gap-2">
                         <Bell size={15} className="text-purple-600" />
