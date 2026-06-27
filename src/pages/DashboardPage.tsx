@@ -102,6 +102,24 @@ const DashboardPage = () => {
                                 <Mail size={18} />
                                 {t('viewInvitations')}
                             </Button>
+                            {/* Onboarding guide - shown only while the user has no house */}
+                            <div className="border-t border-white/30 pt-4 mt-1 w-full">
+                                <p className="text-blue-800/80 text-xs font-semibold mb-2">{t('howItWorks')}</p>
+                                <ul className="text-blue-800/70 text-xs flex flex-col gap-2">
+                                    <li className="flex items-start gap-2">
+                                        <Home size={14} className="mt-0.5 shrink-0" />
+                                        <span>{t('guideCreateHouse')}</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <Search size={14} className="mt-0.5 shrink-0" />
+                                        <span>{t('guideFindHouse')}</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <Mail size={14} className="mt-0.5 shrink-0" />
+                                        <span>{t('guideInvitations')}</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 )}
