@@ -251,7 +251,12 @@ const AdminDashboardPage = () => {
                             {houses.map(house => (
                                 <Fragment key={house.id}>
                                     <tr>
-                                        <td className="px-5 py-3">{house.address} {house.addressNumber}</td>
+                                        <td className="px-5 py-3">
+                                            <div>{house.address} {house.addressNumber}</div>
+                                            <div className="text-xs text-slate-400">
+                                                {[house.areaName, house.cityName].filter(Boolean).join(', ')}
+                                            </div>
+                                        </td>
                                         <td className="px-5 py-3">{house.ownerFullName}</td>
                                         <td className="px-5 py-3">{house.currentRoommates ?? 0}</td>
                                         <td className="px-5 py-3">
