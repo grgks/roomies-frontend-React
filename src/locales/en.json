@@ -265,5 +265,12 @@
   "searchRoommates": "Search Roommates",
   "deleteHouse": "Delete House",
   "deleteHouseConfirmMessage": "Are you sure? This will permanently delete the house and all related data.",
-  "deactivateAccount": "Deactivate Account"
+  "deactivateAccount": "Deactivate Account",
+  "howItWorks": "How it works",
+  "guideCreateHouse": "Create your own house and become the manager - you can invite roommates afterwards.",
+  "guideFindHouse": "Search existing houses in your area and request to join.",
+  "guideInvitations": "Check invitations others have sent you and accept to join a house.",
+  "leaveHouseConfirmMessage": "Are you sure you want to leave this house? You'll lose access to its roommates, expenses and tasks.",
+  "confirmLeave": "Leave",
+  "leaving": "Leaving..."
 }

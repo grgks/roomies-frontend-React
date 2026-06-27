@@ -14,6 +14,7 @@ import { fetchAverageScores } from '@/services/ratingService';
 import SearchHousesPage from "@/pages/SearchHousesPage.tsx";
 import {useTranslation} from "react-i18next";
 import usePageTitle from "@/hooks/usePageTitle.ts";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
 
 const HouseViewPage = () => {
 
@@ -55,6 +56,9 @@ const HouseViewPage = () => {
         fetchData();
     }, [houseId]);
 
+    const [leaveOpen, setLeaveOpen] = useState(false);
+    const [leaving, setLeaving] = useState(false);
+
     const handleLeave = async () => {
         if (!houseId) return;
         try {
@@ -62,6 +66,7 @@ const HouseViewPage = () => {
             await refreshAuth();
             navigate('/dashboard');
         } catch {
+            setLeaving(false);
             //console.error('Could not leave house');
         }
     };
@@ -162,13 +167,30 @@ const HouseViewPage = () => {
                         >
                             {t('back')}
                         </Button>
-                        <Button
-                            id="leave-house-btn"
-                            variant="destructive"
-                            onClick={handleLeave}
-                        >
-                            {t('leaveHouse')}
-                        </Button>
+                        <Dialog open={leaveOpen} onOpenChange={setLeaveOpen}>
+                            <DialogTrigger asChild>
+                                <Button id="leave-house-btn" variant="destructive">
+                                    {t('leaveHouse')}
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent>
+                                <DialogHeader>
+                                    <DialogTitle>{t('leaveHouse')}</DialogTitle>
+                                    <DialogDescription className="sr-only">{t('leaveHouse')}</DialogDescription>
+                                </DialogHeader>
+                                <div className="flex flex-col gap-4 mt-2">
+                                    <p className="text-sm text-slate-600">{t('leaveHouseConfirmMessage')}</p>
+                                    <div className="flex gap-2 justify-end">
+                                        <Button variant="outline" onClick={() => setLeaveOpen(false)}>
+                                            {t('cancel')}
+                                        </Button>
+                                        <Button variant="destructive" disabled={leaving} onClick={handleLeave}>
+                                            {leaving ? t('leaving') : t('confirmLeave')}
+                                        </Button>
+                                    </div>
+                                </div>
+                            </DialogContent>
+                        </Dialog>
                     </div>
 
                 </div>
