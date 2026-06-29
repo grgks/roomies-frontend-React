@@ -1,7 +1,7 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/assets/*", "*.{css,js,png,svg,ico,json}"]
+    "exclude": ["/assets/*", "*.{css,js,png,svg,ico,json,txt,xml,webmanifest}"]
   },
   "globalHeaders": {
     "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self' https://api.theroommies.gr https://keycloak-prod-production-7079.up.railway.app wss://api.theroommies.gr https://*.in.applicationinsights.azure.com https://*.livediagnostics.monitor.azure.com https://js.monitor.azure.com; frame-src https://keycloak-prod-production-7079.up.railway.app; frame-ancestors 'none'; base-uri 'self'; form-action 'self'",    "X-Content-Type-Options": "nosniff",
