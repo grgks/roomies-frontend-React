@@ -11,6 +11,7 @@ if (connectionString) {
             enableAutoRouteTracking: true,   // tracking React Router navigation
             disableFetchTracking: false,     // records API calls το backend
             enableAjaxErrorStatusText: true, // logs HTTP error status
+            disablePageUnloadEvents: ["unload"], // avoid deprecated unload listener, use pagehide/visibilitychange instead
         },
     });
 
