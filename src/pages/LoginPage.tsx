@@ -31,6 +31,11 @@ const LoginPage = () => {
         >
 
             <div className="absolute top-4 right-4 flex items-center gap-2">
+
+                <span className="text-white text-xs bg-red-500/50 px-2 py-1 rounded">
+                 canInstall:{String(canInstall)} iOS:{String(isIOS)} installed:{String(isInstalled)}
+                </span>
+
                 {!isInstalled && (canInstall || isIOS) && (
                     <div className="relative">
                         <button
