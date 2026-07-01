@@ -272,5 +272,7 @@
   "guideInvitations": "Check invitations others have sent you and accept to join a house.",
   "leaveHouseConfirmMessage": "Are you sure you want to leave this house? You'll lose access to its roommates, expenses and tasks.",
   "confirmLeave": "Leave",
-  "leaving": "Leaving..."
+  "leaving": "Leaving...",
+  "installApp": "Install app",
+  "iosInstallHint": "Tap Share, then \"Add to Home Screen\""
 }
