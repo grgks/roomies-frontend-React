@@ -30,11 +30,30 @@ const LoginPage = () => {
             style={{ backgroundImage: "url('/room.jpg')" }}
         >
 
-            <button
-                onClick={toggleLanguage}
-                className="absolute top-4 right-4 text-xs px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-medium transition cursor-pointer">
-                {i18n.language === 'el' ? 'EN' : 'EL'}
-            </button>
+            <div className="absolute top-4 right-4 flex items-center gap-2">
+                {!isInstalled && (canInstall || isIOS) && (
+                    <div className="relative">
+                        <button
+                            onClick={isIOS ? () => setShowIOSHint(v => !v) : promptInstall}
+                            className="text-xs px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-medium transition cursor-pointer flex items-center gap-1.5"
+                        >
+                            <Download size={14} />
+                            {t('installApp')}
+                        </button>
+                        {isIOS && showIOSHint && (
+                            <p className="absolute right-0 top-full mt-2 w-56 bg-black/70 backdrop-blur-sm text-white/95 text-xs rounded-lg p-3 leading-relaxed text-center flex items-center justify-center gap-1 flex-wrap z-10">
+                                {t('iosInstallHint')}
+                                <Share size={13} className="inline" />
+                            </p>
+                        )}
+                    </div>
+                )}
+                <button
+                    onClick={toggleLanguage}
+                    className="text-xs px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-medium transition cursor-pointer">
+                    {i18n.language === 'el' ? 'EN' : 'EL'}
+                </button>
+            </div>
             <div className="bg-white/20 backdrop-blur-md rounded-2xl shadow-lg p-10 flex flex-col items-center gap-6 min-w-[320px]">
                 <img
                     src="/roomies.png"
@@ -57,37 +76,6 @@ const LoginPage = () => {
                     >
                         {t('createAccount')}
                     </button>
-
-                    {!isInstalled && (
-                        <>
-                            {canInstall && (
-                                <button
-                                    onClick={promptInstall}
-                                    className="bg-white/10 hover:bg-white/20 text-white font-medium px-8 py-2.5 rounded-lg transition w-full border border-white/30 flex items-center justify-center gap-2 text-sm"
-                                >
-                                    <Download size={16} />
-                                    {t('installApp')}
-                                </button>
-                            )}
-                            {isIOS && (
-                                <div className="w-full">
-                                    <button
-                                        onClick={() => setShowIOSHint(v => !v)}
-                                        className="bg-white/10 hover:bg-white/20 text-white font-medium px-8 py-2.5 rounded-lg transition w-full border border-white/30 flex items-center justify-center gap-2 text-sm"
-                                    >
-                                        <Download size={16} />
-                                        {t('installApp')}
-                                    </button>
-                                    {showIOSHint && (
-                                        <p className="text-white/90 text-xs mt-2 text-center leading-relaxed flex items-center justify-center gap-1 flex-wrap">
-                                            {t('iosInstallHint')}
-                                            <Share size={13} className="inline" />
-                                        </p>
-                                    )}
-                                </div>
-                            )}
-                        </>
-                    )}
                 </div>
             </div>
         </div>
