@@ -32,24 +32,41 @@ const LoginPage = () => {
 
             <div className="absolute top-4 right-4 flex items-center gap-2">
 
-                <span className="text-white text-xs bg-red-500/50 px-2 py-1 rounded">
-                 canInstall:{String(canInstall)} iOS:{String(isIOS)} installed:{String(isInstalled)}
-                </span>
-
-                {!isInstalled && (canInstall || isIOS) && (
+                {!isInstalled && (
                     <div className="relative">
-                        <button
-                            onClick={isIOS ? () => setShowIOSHint(v => !v) : promptInstall}
-                            className="text-xs px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-medium transition cursor-pointer flex items-center gap-1.5"
-                        >
-                            <Download size={14} />
-                            {t('installApp')}
-                        </button>
-                        {isIOS && showIOSHint && (
-                            <p className="absolute right-0 top-full mt-2 w-56 bg-black/70 backdrop-blur-sm text-white/95 text-xs rounded-lg p-3 leading-relaxed text-center flex items-center justify-center gap-1 flex-wrap z-10">
-                                {t('iosInstallHint')}
-                                <Share size={13} className="inline" />
-                            </p>
+                        {canInstall ? (
+                            /* Android with a live prompt: real one-tap install button */
+                            <button
+                                onClick={promptInstall}
+                                className="text-xs px-3 py-1.5 rounded-lg bg-white/20 hover:bg-white/30 text-white font-medium transition cursor-pointer flex items-center gap-1.5"
+                            >
+                                <Download size={14} />
+                                {t('installApp')}
+                            </button>
+                        ) : (
+                            /* No prompt available (iOS, or Chrome hasn't fired the event yet):
+                               show a small tappable hint with manual instructions instead */
+                            <>
+                                <button
+                                    onClick={() => setShowIOSHint(v => !v)}
+                                    className="text-xs px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white/80 font-medium transition cursor-pointer flex items-center gap-1.5"
+                                >
+                                    <Download size={14} />
+                                    {t('installApp')}
+                                </button>
+                                {showIOSHint && (
+                                    <p className="absolute right-0 top-full mt-2 w-60 bg-black/70 backdrop-blur-sm text-white/95 text-xs rounded-lg p-3 leading-relaxed text-center flex items-center justify-center gap-1 flex-wrap z-10">
+                                        {isIOS ? (
+                                            <>
+                                                {t('iosInstallHint')}
+                                                <Share size={13} className="inline" />
+                                            </>
+                                        ) : (
+                                            t('androidInstallHint')
+                                        )}
+                                    </p>
+                                )}
+                            </>
                         )}
                     </div>
                 )}
