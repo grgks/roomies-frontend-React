@@ -2,10 +2,16 @@ import useAuth from "@/hooks/useAuth";
 import keycloak from "@/services/keycloakService";
 import { useTranslation } from 'react-i18next';
 import usePageTitle from "@/hooks/usePageTitle.ts";
+import useInstallPrompt from "@/hooks/useInstallPrompt.ts";
+import {useState} from "react";
+import {Download, Share} from "lucide-react";
 
 
 const LoginPage = () => {
     const { login } = useAuth();
+
+    const { isInstalled, isIOS, canInstall, promptInstall } = useInstallPrompt();
+    const [showIOSHint, setShowIOSHint] = useState(false);
     const { t, i18n } = useTranslation();
 
     const toggleLanguage = () => {
@@ -51,6 +57,37 @@ const LoginPage = () => {
                     >
                         {t('createAccount')}
                     </button>
+
+                    {!isInstalled && (
+                        <>
+                            {canInstall && (
+                                <button
+                                    onClick={promptInstall}
+                                    className="bg-white/10 hover:bg-white/20 text-white font-medium px-8 py-2.5 rounded-lg transition w-full border border-white/30 flex items-center justify-center gap-2 text-sm"
+                                >
+                                    <Download size={16} />
+                                    {t('installApp')}
+                                </button>
+                            )}
+                            {isIOS && (
+                                <div className="w-full">
+                                    <button
+                                        onClick={() => setShowIOSHint(v => !v)}
+                                        className="bg-white/10 hover:bg-white/20 text-white font-medium px-8 py-2.5 rounded-lg transition w-full border border-white/30 flex items-center justify-center gap-2 text-sm"
+                                    >
+                                        <Download size={16} />
+                                        {t('installApp')}
+                                    </button>
+                                    {showIOSHint && (
+                                        <p className="text-white/90 text-xs mt-2 text-center leading-relaxed flex items-center justify-center gap-1 flex-wrap">
+                                            {t('iosInstallHint')}
+                                            <Share size={13} className="inline" />
+                                        </p>
+                                    )}
+                                </div>
+                            )}
+                        </>
+                    )}
                 </div>
             </div>
         </div>
