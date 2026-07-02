@@ -10,6 +10,7 @@ if (connectionString) {
             connectionString,
             enableAutoRouteTracking: true,   // tracking React Router navigation
             disableFetchTracking: false,     // records API calls το backend
+            cookieCfg: { enabled: false }, // GDPR: cookieless telemetry. no ai_user/ai_session cookies, no consent banner needed
             enableAjaxErrorStatusText: true, // logs HTTP error status
             disablePageUnloadEvents: ["unload"], // avoid deprecated unload listener, use pagehide/visibilitychange instead
         },

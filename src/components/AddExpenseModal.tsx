@@ -80,7 +80,7 @@ const AddExpenseModal = ({ houseId, onExpenseAdded }: AddExpenseModalProps) => {
                         />
                     </FormField>
 
-                    <FormField label={`${t('dueDate')} t('optional')`} htmlFor="expense-duedate-input">
+                    <FormField label={`${t('dueDate')} (${t('optional')})`} htmlFor="expense-duedate-input">
                         <input
                             id="expense-duedate-input"
                             {...register('dueDate')}
