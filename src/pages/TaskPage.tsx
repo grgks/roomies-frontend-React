@@ -107,7 +107,7 @@ const TaskPage = ( ) => {
     return (
         <Layout>
             <div className="bg-sky-300 min-h-screen p-6 pb-16">
-                <div className="max-w-7xl mx-auto flex flex-col gap-6">
+                <div className="max-w-7xl mx-auto flex flex-col gap-6 w-full min-w-0">
 
                     <div className="flex items-center justify-between">
                         <h1 className="text-2xl font-bold text-slate-800">{t("tasks")}</h1>
@@ -143,7 +143,7 @@ const TaskPage = ( ) => {
                         </button>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 min-w-0">
 
                         {/* My Tasks */}
                         <PageTable
