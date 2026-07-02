@@ -178,7 +178,7 @@ const AdminDashboardPage = () => {
                 <div className="max-w-6xl mx-auto flex flex-col gap-6">
 
                     {/* Nav row */}
-                    <div className="flex justify-end gap-3">
+                    <div className="flex flex-wrap justify-end gap-3">
                         <AddCityModal onCityAdded={(city) => setCities(prev => [...prev, city])} />
                         <AddAreaModal onAreaAdded={(area) => setAreas(prev => [...prev, area])} />
                         <Link to="/admin/roommates-without-house">
