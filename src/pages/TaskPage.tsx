@@ -143,8 +143,7 @@ const TaskPage = ( ) => {
                         </button>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 min-w-0">
-
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 min-w-0 [&>*]:min-w-0 [&>*]:overflow-hidden">
                         {/* My Tasks */}
                         <PageTable
                             tableId="my-tasks-table"
