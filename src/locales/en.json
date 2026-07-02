@@ -275,5 +275,6 @@
   "leaving": "Leaving...",
   "installApp": "Install app",
   "iosInstallHint": "Tap Share, then \"Add to Home Screen\"",
-  "androidInstallHint": "Open the Chrome menu (⋮) and tap \"Install app\""
+  "androidInstallHint": "Open the Chrome menu (⋮) and tap \"Install app\"",
+  "terms": "Terms of Service"
 }

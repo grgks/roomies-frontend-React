@@ -39,8 +39,8 @@ export const AVATARS = [
 ] as const;
 
 export const PRIVACY_POLICY_LAST_UPDATED = {
-    el: "Ιούνιος 2026",
-    en: "June 2026",
+    el: "Ιούλιος 2026",
+    en: "July 2026",
 };
 
 export const APPLICATION_EMAIL = "roomies@example.com";

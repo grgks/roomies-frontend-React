@@ -78,16 +78,33 @@ const PrivacyEn = () => {
                     </section>
 
                     <section>
-                        <h2 className="text-lg font-semibold text-slate-700 mb-2">7. Third Parties</h2>
+                        <h2 className="text-lg font-semibold text-slate-700 mb-2">7. Third Parties (Data Processors)</h2>
                         <ul className="flex flex-col gap-1 text-sm text-slate-600 list-disc list-inside">
                             <li><strong>Keycloak</strong> - identity and access management</li>
-                            <li><strong>Railway</strong> - backend and database hosting</li>
+                            <li><strong>Railway</strong> - backend and database hosting (EU West region, Amsterdam)</li>
                             <li><strong>Azure Static Web Apps</strong> - frontend hosting</li>
+                            <li><strong>Azure Application Insights</strong> - performance and error telemetry (anonymous, cookieless)</li>
                         </ul>
+                        <p className="text-sm text-slate-600 mt-2">
+                            All your data is stored and processed within the European Union.
+                        </p>
                     </section>
 
                     <section>
-                        <h2 className="text-lg font-semibold text-slate-700 mb-2">8. Contact</h2>
+                        <h2 className="text-lg font-semibold text-slate-700 mb-2">8. Cookies</h2>
+                        <p className="text-sm text-slate-600 leading-relaxed">
+                            We use strictly necessary cookies only:
+                        </p>
+                        <ul className="mt-2 flex flex-col gap-1 text-sm text-slate-600 list-disc list-inside">
+                            <li>Authentication cookies (httpOnly) to keep you signed in</li>
+                        </ul>
+                        <p className="text-sm text-slate-600 mt-2">
+                            We do not use analytics, advertising, or tracking cookies. Performance telemetry operates without cookies.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2 className="text-lg font-semibold text-slate-700 mb-2">9. Contact</h2>
                         <p className="text-sm text-slate-600">
                             For any privacy-related questions or data requests: <span className="text-indigo-600">{APPLICATION_EMAIL}</span>
                         </p>

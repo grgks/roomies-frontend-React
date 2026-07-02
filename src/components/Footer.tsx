@@ -43,6 +43,7 @@ const Footer = () => {
                         <span className="opacity-30">|</span>
                         <Link to={"/about"}  className="hover:text-gray-300">{t('about')}</Link>
                         <Link to={"/privacy"}  className="hover:text-gray-300">{t('privacy')}</Link>
+                        <Link to={"/terms"}  className="hover:text-gray-300">{t('terms')}</Link>
                         <Link to={"/contact"}  className="hover:text-gray-300">{t('contact')}</Link>
                     </div>
 

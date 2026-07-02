@@ -23,6 +23,7 @@ import AdminUsersPage from "@/pages/AdminUsersPage.tsx";
 import AdminDashboardPage from "@/pages/AdminDashboardPage.tsx";
 import AdminRoommatesWithoutHousePage from "@/pages/AdminRoommatesWithoutHousePage.tsx";
 import NotFoundPage from "@/pages/NotFoundPage.tsx";
+import TermsPage from "@/pages/TermsPage.tsx";
 
 
 // if authenticated -> show component
@@ -101,6 +102,9 @@ const AppRouter = () => {
 
             <Route path="/privacy" element={
                 <PrivacyPage />} />
+
+            <Route path="/terms" element={
+                <TermsPage />} />
 
             <Route path="/about" element={
                 <AboutPage />} />

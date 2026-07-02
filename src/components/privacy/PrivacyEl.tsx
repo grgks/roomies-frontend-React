@@ -81,16 +81,33 @@ const PrivacyEl = () => {
                     </section>
 
                     <section>
-                        <h2 className="text-lg font-semibold text-slate-700 mb-2">7. Τρίτα Μέρη</h2>
+                        <h2 className="text-lg font-semibold text-slate-700 mb-2">7. Τρίτα Μέρη (Εκτελούντες την Επεξεργασία)</h2>
                         <ul className="flex flex-col gap-1 text-sm text-slate-600 list-disc list-inside">
                             <li><strong>Keycloak</strong> - διαχείριση ταυτότητας και πρόσβασης</li>
-                            <li><strong>Railway</strong> - φιλοξενία backend και βάσης δεδομένων</li>
+                            <li><strong>Railway</strong> - φιλοξενία backend και βάσης δεδομένων (περιοχή EU West, Άμστερνταμ)</li>
                             <li><strong>Azure Static Web Apps</strong> - φιλοξενία frontend</li>
+                            <li><strong>Azure Application Insights</strong> - τηλεμετρία απόδοσης και σφαλμάτων (ανώνυμη, χωρίς cookies)</li>
                         </ul>
+                        <p className="text-sm text-slate-600 mt-2">
+                            Όλα τα δεδομένα σας αποθηκεύονται και επεξεργάζονται εντός της Ευρωπαϊκής Ένωσης.
+                        </p>
                     </section>
 
                     <section>
-                        <h2 className="text-lg font-semibold text-slate-700 mb-2">8. Επικοινωνία</h2>
+                        <h2 className="text-lg font-semibold text-slate-700 mb-2">8. Cookies</h2>
+                        <p className="text-sm text-slate-600 leading-relaxed">
+                            Χρησιμοποιούμε αποκλειστικά απαραίτητα cookies:
+                        </p>
+                        <ul className="mt-2 flex flex-col gap-1 text-sm text-slate-600 list-disc list-inside">
+                            <li>Cookies Αυθεντικοποίησης (httpOnly) για τη διατήρηση της σύνδεσής σας</li>
+                        </ul>
+                        <p className="text-sm text-slate-600 mt-2">
+                            Δεν χρησιμοποιούμε cookies analytics, διαφήμισης ή παρακολούθησης. Η τηλεμετρία απόδοσης λειτουργεί χωρίς cookies.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2 className="text-lg font-semibold text-slate-700 mb-2">9. Επικοινωνία</h2>
                         <p className="text-sm text-slate-600">
                             Για οποιαδήποτε ερώτηση σχετική με το απόρρητο ή αίτημα δεδομένων: <span className="text-indigo-600">{APPLICATION_EMAIL}</span>
                         </p>
