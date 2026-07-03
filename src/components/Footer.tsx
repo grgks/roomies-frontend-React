@@ -8,8 +8,8 @@ const Footer = () => {
 
     return (
         <>
-            <footer
-                className="bg-gray-700 fixed bottom-0 left-0 w-full bg-black/40 backdrop-blur border-t border-white/10">
+        <footer
+            className="bg-gray-700 w-full bg-black/40 backdrop-blur border-t border-white/10 md:fixed md:bottom-0 md:left-0">
                 <div
                     className="max-w-6xl mx-auto px-6 py-4 text-white text-sm flex flex-col md:flex-row justify-between items-center gap-3">
 
