@@ -37,7 +37,7 @@ const DashboardPage = () => {
         <>
             <Header />
             <div
-                className ="h-screen w-screen overflow-hidden bg-cover bg-center bg-no-repeat"
+                className ="relative h-screen w-full overflow-hidden bg-cover bg-center bg-no-repeat"
                 style={{backgroundImage: "url('/room.jpg')" }}>
 
                 {/* Flame overlay */}
