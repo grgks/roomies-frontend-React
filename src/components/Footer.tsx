@@ -17,38 +17,25 @@ const Footer = () => {
                     <p className="opacity-70">{t('copyright')} {currentYear}</p>
 
                     {/*// <!-- CENTER NAV -->*/}
-                    <div className="flex gap-5 flex-wrap justify-center">
-                        <Link
-                            to={"/expenses"}
-                            className="hover:text-blue-400">
-                            {t('expenses')}
-                        </Link>
-
-                        <Link
-                            to={"/messages"} className="hover:text-purple-400">
-                            {t('messages')}
-                        </Link>
-
-                        <Link
-                            to={"/invitations"} className="hover:text-yellow-400">
-                            {t('invitations')}
-                        </Link>
-
-                        <Link
-                            to={"/roommates"} className="hover:text-green-600">
-                            {t('roommates')}
-                        </Link>
+                    <div className="flex flex-col items-center gap-2">
+                             <div className="flex gap-5 flex-wrap justify-center">
+                                 <Link to={"/expenses"} className="hover:text-blue-400">{t('expenses')}</Link>
+                                 <Link to={"/messages"} className="hover:text-purple-400">{t('messages')}</Link>
+                                 <Link to={"/invitations"} className="hover:text-yellow-400">{t('invitations')}</Link>
+                                 <Link to={"/roommates"} className="hover:text-green-600">{t('roommates')}</Link>
+                             </div>
 
                         {/*// <!-- Divider -->*/}
-                        <span className="opacity-30">|</span>
-                        <Link to={"/about"}  className="hover:text-gray-300">{t('about')}</Link>
-                        <Link to={"/privacy"}  className="hover:text-gray-300">{t('privacy')}</Link>
-                        <Link to={"/terms"}  className="hover:text-gray-300">{t('terms')}</Link>
-                        <Link to={"/contact"}  className="hover:text-gray-300">{t('contact')}</Link>
+                        <div className="flex gap-5 flex-wrap justify-center text-xs opacity-80">
+                                  <Link to={"/about"} className="hover:text-gray-300">{t('about')}</Link>
+                                  <Link to={"/privacy"} className="hover:text-gray-300">{t('privacy')}</Link>
+                                  <Link to={"/terms"} className="hover:text-gray-300">{t('terms')}</Link>
+                                  <Link to={"/contact"} className="hover:text-gray-300">{t('contact')}</Link>
+                        </div>
                     </div>
 
                     {/* RIGHT SOCIAL */}
-                    <div className="flex gap-3">
+                    <div className="flex gap-10 mt-2 md:mt-0">
                         <a href="https://github.com/grgks" target="_blank" rel="noopener noreferrer"
                            className="text-white/60 hover:text-white hover:scale-180 transition">
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
