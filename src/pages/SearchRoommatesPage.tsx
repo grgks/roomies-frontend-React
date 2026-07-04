@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import PageTable from '@/components/PageTable';
 import { Button } from '@/components/ui/button';
-import type { Roommate } from '@/types';
 import useAuth from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import {inviteRoommate, searchRoommatesWithScores} from "@/services/roommateService.ts";
 import usePageTitle from "@/hooks/usePageTitle.ts";
 import {useTranslation} from "react-i18next";
+import {AVATARS} from "@/utils/constants.ts";
+import type {RoommateSearch} from "@/types";
 
 const SearchRoommatesPage = () => {
     const { houseId } = useAuth();
@@ -17,7 +18,7 @@ const SearchRoommatesPage = () => {
 
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
-    const [roommates, setRoommates] = useState<Roommate[]>([]);
+    const [roommates, setRoommates] = useState<RoommateSearch[]>([]);
     const [loading, setLoading] = useState(false);
     const [invitedIds, setInvitedIds] = useState<Set<number>>(new Set());
     const [sending, setSending] = useState<number | null>(null);
@@ -56,7 +57,7 @@ const SearchRoommatesPage = () => {
         }
     };
 
-    const handleInvite = async (roommate: Roommate) => {
+    const handleInvite = async (roommate: RoommateSearch) => {
         if (!houseId) return;
         setSending(roommate.id);
         try {
@@ -112,35 +113,47 @@ const SearchRoommatesPage = () => {
                         tableId="search-roommates-table"
                         title={t('results')}
                         color="indigo"
-                        columns={[t('firstname'), t('lastname'), t('gender'), t('rating'), ""]}
+                        columns={[t('firstname'), t('gender'), t('rating'), ""]}
                         isEmpty={roommates.length === 0}
                         emptyMessage={t('noRoommatesFound')}
                         maxHeight="400px"
                     >
-                        {sortedRoommates.map(roommate => (
-                            <tr key={roommate.id} id={`roommate-${roommate.id}`}>
-                                <td className="px-5 py-3 font-medium text-slate-700">{roommate.firstname}</td>
-                                <td className="px-5 py-3 text-slate-500">{roommate.lastname}</td>
-                                <td className="px-5 py-3 text-slate-500">{roommate.gender}</td>
-                                <td className="px-5 py-3 text-slate-500">
-                                    {scores[roommate.id] ? `⭐ ${scores[roommate.id].toFixed(1)}` : '—'}
-                                </td>
-                                <td className="px-5 py-3 text-right">
-                                    {invitedIds.has(roommate.id) ? (
-                                        <span className="text-xs text-green-600 font-medium">{t('invited')} ✅</span>
-                                    ) : (
-                                        <Button
-                                            size="sm"
-                                            disabled={sending === roommate.id}
-                                            onClick={() => handleInvite(roommate)}
-                                        >
-                                            {sending === roommate.id ? t('sending') : t('invite')}
-                                        </Button>
-                                    )}
-                                </td>
-                            </tr>
+                        {sortedRoommates.map(roommate => {
+                            const avatarUrl = AVATARS.find(a => a.id === roommate.avatarId)?.url;
+                            return (
+                                <tr key={roommate.id} id={`roommate-${roommate.id}`}>
+                                    <td className="px-5 py-3 font-medium text-slate-700">
+                                        <div className="flex items-center gap-2">
+                                            {avatarUrl ? (
+                                                <img src={avatarUrl} alt=""
+                                                     className="w-8 h-8 rounded-full object-cover"/>
+                                            ) : (
+                                                <div className="w-8 h-8 rounded-full bg-slate-200"/>
+                                            )}
+                                            <span>{roommate.firstname}</span>
+                                        </div>
+                                    </td>
+                                    <td className="px-5 py-3 text-slate-500">{roommate.gender}</td>
+                                    <td className="px-5 py-3 text-slate-500">
+                                        {scores[roommate.id] ? `⭐ ${scores[roommate.id].toFixed(1)}` : '—'}
+                                    </td>
 
-                        ))}
+                                    <td className="px-5 py-3 text-right">
+                                        {invitedIds.has(roommate.id) ? (
+                                            <span className="text-xs text-green-600 font-medium">{t('invited')} ✅</span>
+                                        ) : (
+                                            <Button
+                                                size="sm"
+                                                disabled={sending === roommate.id}
+                                                onClick={() => handleInvite(roommate)}
+                                            >
+                                                {sending === roommate.id ? t('sending') : t('invite')}
+                                            </Button>
+                                        )}
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </PageTable>
 
                     <div className="flex justify-start">

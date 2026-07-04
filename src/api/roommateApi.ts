@@ -1,4 +1,4 @@
-import type {Roommate, RoommateFilters, RoommateInsert, RoommateUpdate} from "@/types";
+import type {PagedResponse, Roommate, RoommateFilters, RoommateInsert, RoommateSearch, RoommateUpdate} from "@/types";
 import axiosInstance from "@/services/axiosInstance.ts";
 
 //POST /api/roommate/me - create roommate with current user once
@@ -30,6 +30,14 @@ export const searchRoommates =
         {params: filters});
     return res.data;
 }
+
+//GET /api/roommate/search-for-invite - privacy-minimised search (no lastname), rating included
+export const searchRoommatesForInvite =
+    async(filters: RoommateFilters): Promise<PagedResponse<RoommateSearch>> => {
+        const res = await axiosInstance.get('/api/roommate/search-for-invite',
+            {params: filters});
+        return res.data;
+    }
 
 //GET /api/roommate/active - Get active roommates in my house
 export const getActiveRoommates = async(): Promise<Roommate[]> => {
