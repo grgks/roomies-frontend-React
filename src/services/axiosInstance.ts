@@ -8,6 +8,10 @@ const axiosInstance = axios.create({
     withCredentials: true,
 });
 
+// Custom header για CSRF protection - triggers CORS preflight in cross-site requests,
+// so plain HTML form submissions from malicious sites cannot forge state-changing requests.
+axiosInstance.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 // Response interceptor - handles token refresh on 401
 // Flow: request -> 401 -> refresh token -> retry original request
 // If refresh fails -> logout (cookies cleared)
