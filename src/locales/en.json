@@ -276,5 +276,8 @@
   "installApp": "Install app",
   "iosInstallHint": "Tap Share, then \"Add to Home Screen\"",
   "androidInstallHint": "Open the Chrome menu (⋮) and tap \"Install app\"",
-  "terms": "Terms of Service"
+  "terms": "Terms of Service",
+  "visibleInSearchHint":  "House owners can find you to invite",
+  "visibleInSearch":  "Visible in search"
+
 }

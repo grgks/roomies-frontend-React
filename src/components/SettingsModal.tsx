@@ -77,6 +77,7 @@ const SettingsModal = () => {
                 firstname: roommate.firstname,
                 lastname: roommate.lastname,
                 gender: roommate.gender,
+                activeAtSearch: roommate.activeAtSearch ?? true,
             });
         }
     }, [roommate, resetProfile]);
@@ -278,6 +279,20 @@ const SettingsModal = () => {
                                         ))}
                                     </select>
                                 </div>
+
+                                {/* Active at search toggle */}
+                                <label className="flex items-center justify-between gap-3 py-1 cursor-pointer">
+                                    <div className="flex flex-col">
+                                        <span className="text-sm text-slate-700">{t('visibleInSearch')}</span>
+                                        <span className="text-xs text-slate-400">{t('visibleInSearchHint')}</span>
+                                    </div>
+                                    <input
+                                        type="checkbox"
+                                        {...registerProfile('activeAtSearch')}
+                                        className="w-4 h-4 accent-purple-600 cursor-pointer"
+                                    />
+                                </label>
+
                                 {profileError && (
                                     <p className="text-xs text-red-500">{profileError}</p>
                                 )}
