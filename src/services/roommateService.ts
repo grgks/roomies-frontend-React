@@ -11,7 +11,7 @@ export const searchRoommatesWithScores = async (
     filters: RoommateFilters
 ): Promise<RoommateSearchResult> => {
     const result = await searchRoommatesForInvite(filters);
-    const roommates = (result.data ?? []).filter(r => r.firstname !== 'Ex-user');
+    const roommates = result.data ?? [];
 
     // rating comes batch-computed inside each DTO now — no N+1
     const scores: Record<number, number> = {};
