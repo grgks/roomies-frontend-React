@@ -11,6 +11,14 @@ let client: Client | null = null;
 export const connectStomp = (
     onNotification: (notification: unknown) => void
 ) => {
+
+    // guard: if a client already exists, tear it down before creating a new one
+    // prevents orphaned connections accumulating on re-mount / re-connect
+    if (client) {
+        client.deactivate();
+        client = null;
+    }
+
     client = new Client({
 
         //creates sockJs connection.browser sends automatically cookiee on handshake and spring identify user
