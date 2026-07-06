@@ -121,6 +121,15 @@ const InstructionEl = () => {
                             <li>Αλλάξετε γλώσσα (English/Greek).</li>
                         </ul>
                     </section>
+
+                    <section>
+                        <h2 className="text-lg font-semibold text-slate-700 mb-2">9. Υποστήριξη</h2>
+                        <p className="text-sm text-slate-600 leading-relaxed">
+                            Για οποιαδήποτε αλλαγή ή διόρθωση που δεν μπορείτε να
+                            πραγματοποιήσετε μόνοι σας (π.χ. διόρθωση Εξόδου, διόρθωση πληροφοριών Σπιτιού), μπορείτε να
+                            επικοινωνήσετε με το προσωπικό του app ώστε να τη διευθετήσει.
+                        </p>
+                    </section>
                 </div>
             </div>
         </div>

@@ -127,6 +127,15 @@ const InstructionEn = () => {
                         </ul>
                     </section>
 
+                    <section>
+                        <h2 className="text-lg font-semibold text-slate-700 mb-2">9. Support</h2>
+                        <p className="text-sm text-slate-600 leading-relaxed">
+                            For any change or correction you cannot make yourself
+                            (e.g. correcting an Expense, correcting info for House), you can contact the app's staff
+                            to have it resolved.
+                        </p>
+                    </section>
+
                 </div>
             </div>
         </div>
