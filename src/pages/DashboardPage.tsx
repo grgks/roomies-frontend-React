@@ -1,6 +1,6 @@
 import Header from "@/components/Header.tsx";
 import Footer from "@/components/Footer.tsx";
-import {Home, Mail, Search} from "lucide-react";
+import {Home, Info, Mail, Search} from "lucide-react";
 import useAuth from "@/hooks/useAuth.ts";
 import {useNavigate} from "react-router-dom";
 import {Button} from "@/components/ui/button.tsx";
@@ -10,6 +10,7 @@ import type {House, Roommate} from "@/types";
 import {getMyHouse} from "@/api/houseApi.ts";
 import {getActiveRoommates} from "@/api/roommateApi.ts";
 import {useTranslation} from "react-i18next";
+import {Link} from "react-router";
 
 const DashboardPage = () => {
     const { houseId, refreshAuth } = useAuth();
@@ -117,6 +118,10 @@ const DashboardPage = () => {
                                     <li className="flex items-start gap-2">
                                         <Mail size={14} className="mt-0.5 shrink-0" />
                                         <span>{t('guideInvitations')}</span>
+                                    </li>
+                                    <li className="flex items-start gap-2">
+                                        <Info size={14} className="mt-0.5 shrink-0"/>
+                                        <Link to={"/instructions"} className="hover:text-gray-800">{t('instructions')}</Link>
                                     </li>
                                 </ul>
                             </div>

@@ -278,6 +278,7 @@
   "androidInstallHint": "Open the Chrome menu (⋮) and tap \"Install app\"",
   "terms": "Terms of Service",
   "visibleInSearchHint":  "House owners can find you to invite",
-  "visibleInSearch":  "Visible in search"
+  "visibleInSearch":  "Visible in search",
+  "instructions": "Learn More..."
 
 }
