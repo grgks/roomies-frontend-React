@@ -108,7 +108,7 @@ const InstructionEn = () => {
                             <li>View house information (address, number of rooms, area, and city).</li>
                             <li>View information about your roommates if you are living in a house.</li>
                             <li>If you are not currently living in a house, you can send requests to houses with available rooms.</li>
-                            <li>If you are not currently living in a house, you can also view the current average rating of each house.</li>
+                            <li>If you are not currently living in a house, you can also view the current average rating of Roommates being that time to each house.</li>
                         </ul>
                     </section>
 
