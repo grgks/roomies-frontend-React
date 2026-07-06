@@ -7,7 +7,7 @@ import InstructionEn from "@/components/instructions/InstructionEn.tsx";
 const PrivacyPage = () => {
     const { i18n, t } = useTranslation();
 
-    usePageTitle(t('privacy'))
+    usePageTitle(t('instructions'))
 
     return (
         <Layout>
