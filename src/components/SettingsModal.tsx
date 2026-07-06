@@ -7,7 +7,19 @@ import {
     DialogTitle,
     DialogTrigger
 } from '@/components/ui/dialog';
-import { Settings, Key, Globe, LogOut, ChevronDown, ChevronUp, EyeOff, Eye, Pencil, User as UserIcon } from 'lucide-react';
+import {
+    Settings,
+    Key,
+    Globe,
+    LogOut,
+    ChevronDown,
+    ChevronUp,
+    EyeOff,
+    Eye,
+    Pencil,
+    User as UserIcon,
+    CircleHelp
+} from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -20,6 +32,7 @@ import { AVATARS } from '@/utils/constants';
 import { Gender } from '@/types/enums';
 import {RoommateUpdate} from '@/types';
 import type { Roommate } from '@/types';
+import {Link} from "react-router";
 // import ConfirmDeleteModal from "@/components/ConfirmDeleteModal.tsx";
 
 const ChangePasswordSchema = z.object({
@@ -401,6 +414,24 @@ const SettingsModal = () => {
                             className="text-xs px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition cursor-pointer">
                             {i18n.language === 'el' ? 'EN' : 'EL'}
                         </button>
+                    </div>
+
+                    {/* Help */}
+                    <div className="flex items-center justify-between py-2 border-t">
+                        <div className="flex items-center gap-3">
+                            <CircleHelp size={16} className="text-blue-400" />
+                            <div>
+                                <p className="text-sm font-medium text-slate-700">{t("help")}</p>
+                                <p className="text-xs text-slate-400">{t("helpDescription")}</p>
+                            </div>
+                        </div>
+
+                        <Link
+                            to="/instructions"
+                            className="text-xs px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 transition cursor-pointer"
+                        >
+                            {t("open")}
+                        </Link>
                     </div>
 
                     {/* Deactivate Account */}

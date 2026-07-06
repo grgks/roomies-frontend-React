@@ -279,6 +279,9 @@
   "terms": "Terms of Service",
   "visibleInSearchHint":  "House owners can find you to invite",
   "visibleInSearch":  "Visible in search",
-  "instructions": "Learn More..."
+  "instructions": "Learn More...",
+  "help": "Help",
+  "helpDescription": "Application user guide",
+  "open": "Open"
 
 }
