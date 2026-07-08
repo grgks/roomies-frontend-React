@@ -264,6 +264,7 @@
   "max15Characters": "Max 15 characters",
   "searchRoommates": "Search Roommates",
   "deleteHouse": "Delete House",
+  "editHouse": "Edit House",
   "deleteHouseConfirmMessage": "Are you sure? This will permanently delete the house and all related data.",
   "deactivateAccount": "Deactivate Account",
   "howItWorks": "How it works",
