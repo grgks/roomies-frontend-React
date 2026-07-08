@@ -5,7 +5,7 @@ const AboutEn = () => {
 
                 {/* App */}
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-800 mb-2">About Roomies</h1>
+                    <h1 className="text-3xl font-bold text-slate-800 mb-2">About Roommies</h1>
                     <p className="text-sm text-slate-600 leading-relaxed">
                         Roomies is a full-stack co-living management platform designed to simplify shared living.
                         From splitting expenses and managing tasks to real-time messaging and house invitations.

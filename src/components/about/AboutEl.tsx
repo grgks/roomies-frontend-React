@@ -5,7 +5,7 @@ const AboutEl = () => {
 
                 {/* App */}
                 <div>
-                    <h1 className="text-3xl font-bold text-slate-800 mb-2">Σχετικά με το Roomies</h1>
+                    <h1 className="text-3xl font-bold text-slate-800 mb-2">Σχετικά με το Roommies</h1>
                     <p className="text-sm text-slate-600 leading-relaxed">
                         Το Roomies είναι μια full-stack πλατφόρμα διαχείρισης συγκατοίκησης, σχεδιασμένη για να απλοποιεί τη ζωή σε κοινόχρηστο χώρο.
                         Από τη διαχείριση εξόδων και εργασιών μέχρι την επικοινωνία σε πραγματικό χρόνο και τις προσκλήσεις σπιτιού.
