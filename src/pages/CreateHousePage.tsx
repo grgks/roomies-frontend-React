@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '@/components/Layout';
 import FormField from '@/components/FormField';
 import { Button } from '@/components/ui/button';
-import { HouseInsert } from '@/types/houseSchemas';
-import type { HouseInsert as HouseInsertType } from '@/types/houseSchemas';
+import { HouseInsertSchema } from '@/types/houseSchemas';
+import type { HouseInsert } from '@/types/houseSchemas';
 import type { City, Area } from '@/types';
 import useAuth from '@/hooks/useAuth';
 import LoadingSpinner from '@/components/LoadSpinner';
@@ -26,8 +26,8 @@ const CreateHousePage = () => {
     const [selectedCityId, setSelectedCityId] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
 
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<HouseInsertType>({
-        resolver: zodResolver(HouseInsert) as never,
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<HouseInsert>({
+        resolver: zodResolver(HouseInsertSchema(t)) as never,
     });
 
     usePageTitle(t('createHouse'))
@@ -53,7 +53,7 @@ const CreateHousePage = () => {
         }
     }, [selectedCityId, areas]);
 
-    const onSubmit = async (data: HouseInsertType) => {
+    const onSubmit = async (data: HouseInsert) => {
         try {
             await submitCreateHouse(data);
             await refreshAuth();

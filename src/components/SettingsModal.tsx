@@ -30,20 +30,13 @@ import { changeUserPassword, updateUserAvatar } from '@/services/userService';
 import { useTranslation } from 'react-i18next';
 import { AVATARS } from '@/utils/constants';
 import { Gender } from '@/types/enums';
-import {RoommateUpdate} from '@/types';
-import type { Roommate } from '@/types';
+import { RoommateUpdateSchema } from '@/types';
+import type { Roommate, RoommateUpdate } from '@/types';
 import {Link} from "react-router";
 // import ConfirmDeleteModal from "@/components/ConfirmDeleteModal.tsx";
 
-const ChangePasswordSchema = z.object({
-    currentPassword: z.string().min(1, 'Required'),
-    newPassword: z.string().min(8, 'At least 8 characters'),
-    confirmPassword: z.string().min(1, 'Required'),
-}).refine(d => d.newPassword === d.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
-});
-type ChangePasswordForm = z.infer<typeof ChangePasswordSchema>;
+
+type ChangePasswordForm = { currentPassword: string; newPassword: string; confirmPassword: string };
 
 const SettingsModal = () => {
     const [open, setOpen] = useState(false);
@@ -68,6 +61,15 @@ const SettingsModal = () => {
 
     const { t, i18n } = useTranslation();
 
+    const ChangePasswordSchema = z.object({
+        currentPassword: z.string().min(1, t('required')),
+        newPassword: z.string().min(8, t('passwordMinChars8')),
+        confirmPassword: z.string().min(1, t('required')),
+    }).refine(d => d.newPassword === d.confirmPassword, {
+        message: t('passwordsDoNotMatch'),
+        path: ['confirmPassword'],
+    });
+
     const {
         register,
         handleSubmit,
@@ -81,7 +83,7 @@ const SettingsModal = () => {
         reset: resetProfile,
         formState: { errors: profileErrors, isSubmitting: profileSubmitting },
     } = useForm<RoommateUpdate>({
-        resolver: zodResolver(RoommateUpdate) as never,
+        resolver: zodResolver(RoommateUpdateSchema(t)) as never,
     });
 
     useEffect(() => {

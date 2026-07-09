@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { adminUpdateHouse } from '@/api/generalAdminApi';
-import { HouseUpdate } from '@/types';
-import type { House } from '@/types';
+import { HouseUpdateSchema } from '@/types';
+import type { House, HouseUpdate } from '@/types';
 import { Pencil } from 'lucide-react';
 import FormField from '@/components/FormField';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +19,7 @@ const EditHouseModal = ({ house, onHouseUpdated }: EditHouseModalProps) => {
     const [open, setOpen] = useState(false);
 
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<HouseUpdate>({
-        resolver: zodResolver(HouseUpdate) as never,
+        resolver: zodResolver(HouseUpdateSchema(t)) as never,
         defaultValues: {
             address: house.address,
             addressNumber: house.addressNumber,

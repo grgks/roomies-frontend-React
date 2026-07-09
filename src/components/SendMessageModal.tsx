@@ -1,19 +1,16 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { MessageSquarePlus } from 'lucide-react';
 import { sendMessage } from '@/api/messageApi';
 import { type Message, type Roommate } from '@/types';
 import FormField from '@/components/FormField';
 import {useTranslation} from "react-i18next";
+import { MessageInsertSchema } from '@/types';
+import type { MessageInsert } from '@/types';
 
-const SendMessageSchema = z.object({
-    content: z.string().min(1, 'Message cannot be empty').max(3000),
-    receiverId: z.number().int().optional(),
-});
-type SendMessageForm = z.infer<typeof SendMessageSchema>;
+type SendMessageForm = Omit<MessageInsert, 'houseId'>;
 
 interface SendMessageModalProps {
     houseId: number;
@@ -25,6 +22,8 @@ interface SendMessageModalProps {
 const SendMessageModal = ({ houseId, roommates, defaultReceiverId, onMessageSent }: SendMessageModalProps) => {
     const [open, setOpen] = useState(false);
     const { t } = useTranslation();
+
+    const SendMessageSchema = MessageInsertSchema(t).omit({ houseId: true });
 
     const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<SendMessageForm>({
         resolver: zodResolver(SendMessageSchema),

@@ -14,8 +14,7 @@ const createCompleteProfileSchema = (t: (key: string) => string) => z.object({
     phoneNumber: z.string().regex(/^[0-9]{10}$/, t('phoneNumberMustBe10Digits')),
     firstname: z.string().min(3, t('min3Characters')).max(15, t('max15Characters')),
     lastname: z.string().min(3, t('min3Characters')).max(15, t('max15Characters')),
-    gender: z.enum(Object.values(Gender) as [string, ...string[]]),
-});
+    gender: z.enum(Object.values(Gender) as [string, ...string[]], { error: t('selectGender') }),});
 
 type CompleteProfileForm = z.infer<ReturnType<typeof createCompleteProfileSchema>>;
 

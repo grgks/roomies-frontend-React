@@ -1,4 +1,4 @@
-import {type Message, MessageInsert} from "@/types";
+import type { Message, MessageInsert} from "@/types";
 import axiosInstance from "@/services/axiosInstance.ts";
 
 

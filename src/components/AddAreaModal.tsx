@@ -5,8 +5,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Plus } from 'lucide-react';
 import { adminAddArea } from '@/api/generalAdminApi';
 import { getAllCities } from '@/api/staticApi';
-import { AreaInsert } from '@/types';
-import type { Area, City } from '@/types';
+import { AreaInsertSchema } from '@/types';
+import type { Area, City, AreaInsert } from '@/types';
 import FormField from '@/components/FormField';
 import { useTranslation } from 'react-i18next';
 
@@ -20,7 +20,7 @@ const AddAreaModal = ({ onAreaAdded }: AddAreaModalProps) => {
     const [cities, setCities] = useState<City[]>([]);
 
     const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<AreaInsert>({
-        resolver: zodResolver(AreaInsert) as never,
+        resolver: zodResolver(AreaInsertSchema(t)) as never,
     });
 
     useEffect(() => {

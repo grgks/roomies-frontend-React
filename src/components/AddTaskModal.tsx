@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import {
     Dialog,
     DialogContent,
@@ -12,16 +11,14 @@ import {
 } from '@/components/ui/dialog';
 import { createTask } from '@/api/taskApi';
 import { TaskCategory } from '@/types/enums';
-import { TaskInsert } from '@/types';
 import type { Task } from '@/types';
+import { TaskInsertSchema } from '@/types';
 import FormField from '@/components/FormField';
 import { useTranslation } from 'react-i18next';
+import {z} from "zod";
 
 // dueDate comes from a datetime-local input (raw string) and is converted to ISO before validating against TaskInsert
-const AddTaskFormSchema = TaskInsert.omit({ houseId: true, dueDate: true }).extend({
-    dueDate: z.string().min(1, 'Due date is required'),
-});
-type AddTaskForm = z.infer<typeof AddTaskFormSchema>;
+type AddTaskForm = { taskName: string; taskCategory: string; dueDate: string };
 
 interface AddTaskModalProps {
     houseId: number;
@@ -30,6 +27,12 @@ interface AddTaskModalProps {
 
 const AddTaskModal = ({ houseId, onTaskAdded }: AddTaskModalProps) => {
     const { t } = useTranslation();
+
+    // dueDate comes from a datetime-local input (raw string) and is converted to ISO before validating against TaskInsert
+    const AddTaskFormSchema = TaskInsertSchema(t).omit({ houseId: true, dueDate: true }).extend({
+        dueDate: z.string().min(1, t('dueDateIsRequired')),
+    });
+
     const [open, setOpen] = useState(false);
 
     const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<AddTaskForm>({

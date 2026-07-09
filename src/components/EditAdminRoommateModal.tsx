@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { adminUpdateRoommate } from '@/api/generalAdminApi';
-import { RoommateAdminUpdate } from '@/types';
-import type { AdminRoommate } from '@/types';
+import { RoommateAdminUpdateSchema } from '@/types';
+import type { AdminRoommate, RoommateAdminUpdate } from '@/types';
 import { Gender } from '@/types/enums';
 import { Pencil } from 'lucide-react';
 import FormField from '@/components/FormField';
@@ -20,7 +20,7 @@ const EditAdminRoommateModal = ({ roommate, onRoommateUpdated }: EditRoommateMod
     const [open, setOpen] = useState(false);
 
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<RoommateAdminUpdate>({
-        resolver: zodResolver(RoommateAdminUpdate) as never,
+        resolver: zodResolver(RoommateAdminUpdateSchema(t)) as never,
         defaultValues: {
             firstname: roommate.firstname,
             lastname: roommate.lastname,
