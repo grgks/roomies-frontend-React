@@ -10,9 +10,9 @@ const Layout = ({children}:LayoutProps) => {
         <>
             <div className="flex flex-col min-h-screen">
                 <Header/>
-                <div className="flex-1 pt-24 md:pb-16 overflow-x-hidden bg-background">
+                <main className="flex-1 pt-24 md:pb-16 overflow-x-hidden bg-background">
                     {children}
-                </div>
+                </main>
                 <Footer/>
             </div>
         </>
