@@ -1,30 +1,35 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import DashboardPage from '../pages/DashboardPage';
-import ExpensesPage from "@/pages/ExpensesPage.tsx";
-import LoginPage from "@/pages/LoginPage.tsx";
 import useAuth from "@/hooks/useAuth.ts";
 import LoadSpinner from "@/components/LoadSpinner.tsx";
-import ProfilePage from "@/pages/ProfilePage.tsx";
-import CreateHousePage from "@/pages/CreateHousePage.tsx";
-import HouseViewPage from "@/pages/HouseViewPage.tsx";
-import SearchHousesPage from "@/pages/SearchHousesPage.tsx";
-import InvitationPage from "@/pages/InvitationPage.tsx";
-import SearchRoommatesPage from "@/pages/SearchRoommatesPage.tsx";
-import RoommateListPage from "@/pages/RoommateListPage.tsx";
-import MessageListPage from "@/pages/MessageListPage.tsx";
-import MessageViewPage from "@/pages/MessageViewPage.tsx";
-import RatingPage from "@/pages/RatingPage.tsx";
 import useScrollToTop from "@/hooks/useScrollToTop.ts";
-import TaskPage from "@/pages/TaskPage.tsx";
-import PrivacyPage from "@/pages/PrivacyPage.tsx";
-import AboutPage from "@/pages/AboutPage.tsx";
-import ContactPage from "@/pages/ContactPage.tsx";
-import AdminUsersPage from "@/pages/AdminUsersPage.tsx";
-import AdminDashboardPage from "@/pages/AdminDashboardPage.tsx";
-import AdminRoommatesWithoutHousePage from "@/pages/AdminRoommatesWithoutHousePage.tsx";
-import NotFoundPage from "@/pages/NotFoundPage.tsx";
-import TermsPage from "@/pages/TermsPage.tsx";
-import InstructionPage from "@/pages/InstructionPage.tsx";
+
+// Eager: login is the entry point for unauthenticated users
+import LoginPage from "@/pages/LoginPage.tsx";
+
+// Lazy: everything else loads on demand
+const DashboardPage = lazy(() => import('@/pages/DashboardPage'));
+const ExpensesPage = lazy(() => import('@/pages/ExpensesPage'));
+const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
+const CreateHousePage = lazy(() => import('@/pages/CreateHousePage'));
+const HouseViewPage = lazy(() => import('@/pages/HouseViewPage'));
+const SearchHousesPage = lazy(() => import('@/pages/SearchHousesPage'));
+const InvitationPage = lazy(() => import('@/pages/InvitationPage'));
+const SearchRoommatesPage = lazy(() => import('@/pages/SearchRoommatesPage'));
+const RoommateListPage = lazy(() => import('@/pages/RoommateListPage'));
+const MessageListPage = lazy(() => import('@/pages/MessageListPage'));
+const MessageViewPage = lazy(() => import('@/pages/MessageViewPage'));
+const RatingPage = lazy(() => import('@/pages/RatingPage'));
+const TaskPage = lazy(() => import('@/pages/TaskPage'));
+const PrivacyPage = lazy(() => import('@/pages/PrivacyPage'));
+const AboutPage = lazy(() => import('@/pages/AboutPage'));
+const ContactPage = lazy(() => import('@/pages/ContactPage'));
+const TermsPage = lazy(() => import('@/pages/TermsPage'));
+const InstructionPage = lazy(() => import('@/pages/InstructionPage'));
+const AdminUsersPage = lazy(() => import('@/pages/AdminUsersPage'));
+const AdminDashboardPage = lazy(() => import('@/pages/AdminDashboardPage'));
+const AdminRoommatesWithoutHousePage = lazy(() => import('@/pages/AdminRoommatesWithoutHousePage'));
+const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
 
 
 // if authenticated -> show component
@@ -53,6 +58,7 @@ const AppRouter = () => {
     if (isLoading) return <LoadSpinner />;
 
     return (
+        <Suspense fallback={<LoadSpinner />}>
         <Routes>
             {/* Public */}
             <Route path="/login" element={
@@ -138,6 +144,7 @@ const AppRouter = () => {
             {/* Catch-all 404 */}
             <Route path="*" element={<NotFoundPage />} />
         </Routes>
+        </Suspense>
     );
 };
 
