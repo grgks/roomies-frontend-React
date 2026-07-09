@@ -16,12 +16,12 @@ export const Message = z.object({
 export type Message = z.infer<typeof Message>;
 
 //MessageInsert
-export const MessageInsert = z.object({
+export const MessageInsertSchema = (t: (key: string) => string) => z.object({
     receiverId: z.number().int().optional(),
     houseId: z.number().int(),
-    content: z.string().max(3000),
+    content: z.string().min(1, t('messageIsRequired')).max(3000, t('messageMaxChars3000')),
 });
-export type MessageInsert = z.infer<typeof MessageInsert>;
+export type MessageInsert = z.infer<ReturnType<typeof MessageInsertSchema>>;
 
 //MessageFilters
 export const MessageFilters = PaginationParams.extend({

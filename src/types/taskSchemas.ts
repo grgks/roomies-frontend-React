@@ -18,22 +18,22 @@ export type Task = z.infer<typeof Task>;
 
 
 //TaskInsert
-export const TaskInsert = z.object({
-    taskName: z.string(),
+export const TaskInsertSchema = (t: (key: string) => string) => z.object({
+    taskName: z.string().min(1, t('taskNameIsRequired')),
     dueDate: z.iso.datetime(),
     houseId: z.number().int(),
     taskCategory: z.enum(Object.values(TaskCategory) as [string, ...string[]]),
 }) ;
-export type TaskInsert = z.infer<typeof TaskInsert>;
+export type TaskInsert = z.infer<ReturnType<typeof TaskInsertSchema>>;
 
 //TaskUpdate
-export const TaskUpdate = z.object({
-    taskName: z.string(),
+export const TaskUpdateSchema = (t: (key: string) => string) => z.object({
+    taskName: z.string().min(1, t('taskNameIsRequired')),
     taskCategory: z.enum(Object.values(TaskCategory) as [string, ...string[]]),
     taskStatus: z.enum(Object.values(TaskStatus) as [string, ...string[]]),
     dueDate: z.iso.datetime(),
 }) ;
-export type TaskUpdate = z.infer<typeof TaskUpdate>;
+export type TaskUpdate = z.infer<ReturnType<typeof TaskUpdateSchema>>;
 
 //TaskFilters
 export const TaskFilters = PaginationParams.extend({
