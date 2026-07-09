@@ -101,7 +101,7 @@ const CreateHousePage = () => {
                             />
                         </FormField>
 
-                        <FormField label={t('numberOfRooms')} htmlFor="house-rooms">
+                        <FormField label={t('numberOfRooms')} htmlFor="house-rooms" error={errors.numOfRooms?.message}>
                             <input
                                 id="house-rooms"
                                 {...register('numOfRooms', { setValueAs: v => v === '' ? undefined : parseInt(v) })}
@@ -132,7 +132,7 @@ const CreateHousePage = () => {
                                 disabled={!selectedCityId}
                                 className="w-full border rounded-lg px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-400 disabled:opacity-50"
                             >
-                                <option value="">{t('selectArea')}</option>
+                                <option value="">{!selectedCityId ? t('selectCityFirst') : t('selectArea')}</option>
                                 {filteredAreas.map(area => (
                                     <option key={area.id} value={area.id}>{area.name}</option>
                                 ))}
