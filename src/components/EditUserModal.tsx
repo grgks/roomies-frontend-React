@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { updateUser } from '@/api/userAdminApi';
-import { UserAdminUpdate } from '@/types';
-import type { User } from '@/types';
+import { UserAdminUpdateSchema} from '@/types';
+import type { User , UserAdminUpdate} from '@/types';
 import { Pencil } from 'lucide-react';
 import FormField from '@/components/FormField';
 import { Button } from '@/components/ui/button';
@@ -21,7 +21,7 @@ const EditUserModal = ({ user, onUserUpdated }: EditUserModalProps) => {
     const [pendingData, setPendingData] = useState<UserAdminUpdate | null>(null);
 
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<UserAdminUpdate>({
-        resolver: zodResolver(UserAdminUpdate) as never,
+        resolver: zodResolver(UserAdminUpdateSchema(t)) as never,
         defaultValues: {
             id: user.id,
             keycloakId: user.keycloakId,

@@ -8,10 +8,10 @@ export const City = z.object({
 export type City = z.infer<typeof City>;
 
 // CityInsert
-export const CityInsert = z.object({
-    name: z.string(),
+export const CityInsertSchema = (t: (key: string) => string) => z.object({
+    name: z.string().min(1, t('cityNameRequired')),
 });
-export type CityInsert = z.infer<typeof CityInsert>;
+export type CityInsert = z.infer<ReturnType<typeof CityInsertSchema>>;
 
 // CityUpdate
 export const CityUpdate = z.object({
@@ -31,12 +31,12 @@ export const Area = z.object({
 export type Area = z.infer<typeof Area>;
 
 // AreaInsert
-export const AreaInsert = z.object({
-    name: z.string(),
-    cityId: z.number().int(),
+export const AreaInsertSchema = (t: (key: string) => string) => z.object({
+    name: z.string().min(1, t('areaNameRequired')),
+    cityId: z.coerce.number().int({ error: t('required') }),
     postalCode: z.string().optional(),
 });
-export type AreaInsert = z.infer<typeof AreaInsert>;
+export type AreaInsert = z.infer<ReturnType<typeof AreaInsertSchema>>;
 
 // AreaUpdate
 export const AreaUpdate = z.object({

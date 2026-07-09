@@ -284,6 +284,23 @@
   "help": "Help",
   "helpDescription": "Application user guide",
   "open": "Open",
-  "selectCityFirst": "Select a city first"
+  "selectCityFirst": "Select a city first",
+  "firstnameIsRequired": "Firstname is required",
+  "lastnameIsRequired": "Lastname is required",
+  "firstnameMustBeBetween3And15": "Firstname must be between 3 - 15 characters",
+  "lastnameMustBeBetween3And15": "Lastname must be between 3 - 15 characters",
+  "passwordMinChars8": "Password must be at least 8 characters",
+  "descriptionIsRequired": "Description is required",
+  "amountMustBePositive": "Amount must be positive",
+  "minChars3": "At least 3 characters",
+  "maxChars40": "Maximum 40 characters",
+  "maxChars15": "Maximum 15 characters",
+  "minValue1": "At least 1",
+  "taskNameIsRequired": "Task name is required",
+  "dueDateIsRequired": "Due date is required",
+  "messageIsRequired": "Message is required",
+  "messageMaxChars3000": "Message must be under 3000 characters",
+  "required": "Required",
+  "passwordsDoNotMatch": "Passwords do not match"
 
 }

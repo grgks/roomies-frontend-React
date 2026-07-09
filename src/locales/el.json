@@ -287,5 +287,22 @@
   "help": "Βοήθεια",
   "helpDescription": "Οδηγίες χρήσης της εφαρμογής",
   "open": "Άνοιγμα",
-  "selectCityFirst": "Επιλέξτε πρώτα πόλη"
+  "selectCityFirst": "Επιλέξτε πρώτα πόλη",
+  "firstnameIsRequired": "Το όνομα είναι υποχρεωτικό",
+  "lastnameIsRequired": "Το επώνυμο είναι υποχρεωτικό",
+  "firstnameMustBeBetween3And15": "Το όνομα πρέπει να είναι 3 - 15 χαρακτήρες",
+  "lastnameMustBeBetween3And15": "Το επώνυμο πρέπει να είναι 3 - 15 χαρακτήρες",
+  "passwordMinChars8": "Ο κωδικός πρέπει να έχει τουλάχιστον 8 χαρακτήρες",
+  "descriptionIsRequired": "Η περιγραφή είναι υποχρεωτική",
+  "amountMustBePositive": "Το ποσό πρέπει να είναι θετικό",
+  "minChars3": "Τουλάχιστον 3 χαρακτήρες",
+  "maxChars40": "Μέγιστο 40 χαρακτήρες",
+  "maxChars15": "Μέγιστο 15 χαρακτήρες",
+  "minValue1": "Τουλάχιστον 1",
+  "taskNameIsRequired": "Το όνομα εργασίας είναι υποχρεωτικό",
+  "dueDateIsRequired": "Η ημερομηνία λήξης είναι υποχρεωτική",
+  "messageIsRequired": "Το μήνυμα είναι υποχρεωτικό",
+  "messageMaxChars3000": "Το μήνυμα πρέπει να είναι κάτω από 3000 χαρακτήρες",
+  "required": "Υποχρεωτικό",
+  "passwordsDoNotMatch": "Οι κωδικοί δεν ταιριάζουν"
 }

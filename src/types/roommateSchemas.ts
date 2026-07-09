@@ -19,26 +19,26 @@ export type Roommate = z.infer<typeof Roommate>;
 
 
 //RoommateInsert
-export const RoommateInsert = z.object({
-    firstname: z.string().min(3, "Firstname must be between 3 - 15 characters").max(15, "Firstname must be between 3 - 15 characters"),
-    lastname: z.string().min(3, "Lastname must be between 3 - 15 characters").max(15, "Lastname must be between 3 - 15 characters"),
-    gender: z.enum(Object.values(Gender) as [string, ...string[]]),
+export const RoommateInsertSchema = (t: (key: string) => string) => z.object({
+    firstname: z.string().min(3, t("firstnameMustBeBetween3And15")).max(15, t("firstnameMustBeBetween3And15")),
+    lastname: z.string().min(3, t("lastnameMustBeBetween3And15")).max(15, t("lastnameMustBeBetween3And15")),
+    gender: z.enum(Object.values(Gender) as [string, ...string[]], { error: t('selectGender') }),
 });
 
-export type RoommateInsert = z.infer<typeof RoommateInsert>;
+export type RoommateInsert = z.infer<ReturnType<typeof RoommateInsertSchema>>;
 
 
 
 //RoommateUpdate
-export const RoommateUpdate = z.object({
+export const RoommateUpdateSchema = (t: (key: string) => string) => z.object({
     id: z.number().int().optional(),
     keycloakId: z.string().optional(),
-    firstname: z.string().min(3, "Firstname must be between 3 - 15 characters").max(15, "Firstname must be between 3 - 15 characters"),
-    lastname: z.string().min(3, "Lastname must be between 3 - 15 characters").max(15, "Lastname must be between 3 - 15 characters"),
-    gender: z.enum(Object.values(Gender) as [string, ...string[]]),
+    firstname: z.string().min(3, t("firstnameMustBeBetween3And15")).max(15, t("firstnameMustBeBetween3And15")),
+    lastname: z.string().min(3, t("lastnameMustBeBetween3And15")).max(15, t("lastnameMustBeBetween3And15")),
+    gender: z.enum(Object.values(Gender) as [string, ...string[]], { error: t('selectGender') }),
     activeAtSearch: z.boolean().optional(),
 });
-export type RoommateUpdate = z.infer<typeof RoommateUpdate>;
+export type RoommateUpdate = z.infer<ReturnType<typeof RoommateUpdateSchema>>;
 
 //RoommateSearch (privacy-minimised, for invite search)
 export const RoommateSearch = z.object({

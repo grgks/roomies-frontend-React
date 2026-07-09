@@ -28,19 +28,19 @@ export const Expense = z.object({
 export  type Expense = z.infer<typeof Expense>;
 
 //ExpenseInsert
-export const ExpenseInsert = z.object({
-    description: z.string().min(1, "Description is required"),
-    amount: z.coerce.number().positive("Amount must be positive"),
+export const ExpenseInsertSchema = (t: (key: string) => string) => z.object({
+    description: z.string().min(1, t("descriptionIsRequired")),
+    amount: z.coerce.number({ error: t('amountMustBePositive') }).positive(t('amountMustBePositive')),
     houseId: z.number().int(),
     dueDate: z.string().optional(),
 });
-export type ExpenseInsert = z.infer<typeof ExpenseInsert>;
+export type ExpenseInsert = z.infer<ReturnType<typeof ExpenseInsertSchema>>;
 
 //ExpenseUpdate
-export const ExpenseUpdate = ExpenseInsert.omit({
+export const ExpenseUpdateSchema = (t: (key: string) => string) => ExpenseInsertSchema(t).omit({
     houseId: true
 });
-export type ExpenseUpdate = z.infer<typeof ExpenseUpdate>;
+export type ExpenseUpdate = z.infer<ReturnType<typeof ExpenseUpdateSchema>>;
 
 //ExpenseFilters
 export const ExpenseFilters = PaginationParams.extend({

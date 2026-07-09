@@ -1,16 +1,17 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Plus } from 'lucide-react';
 import { createExpense } from '@/api/expenseApi';
-import { type Expense, ExpenseInsert } from '@/types';
+import { type Expense, ExpenseInsertSchema } from '@/types';
+import type { ExpenseInsert } from '@/types'
 import FormField from '@/components/FormField';
 import {useTranslation} from "react-i18next";
 
-const AddExpenseSchema = ExpenseInsert.omit({ houseId: true });
-type AddExpenseForm = z.infer<typeof AddExpenseSchema>;
+
+
+type AddExpenseForm = Omit<ExpenseInsert, 'houseId'>;
 
 interface AddExpenseModalProps {
     houseId: number;
@@ -21,6 +22,8 @@ interface AddExpenseModalProps {
 const AddExpenseModal = ({ houseId, onExpenseAdded }: AddExpenseModalProps) => {
     const [open, setOpen] = useState(false);
     const { t } = useTranslation();
+
+    const AddExpenseSchema = ExpenseInsertSchema(t).omit({ houseId: true });
 
     const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<AddExpenseForm>({
         resolver: zodResolver(AddExpenseSchema) as never,

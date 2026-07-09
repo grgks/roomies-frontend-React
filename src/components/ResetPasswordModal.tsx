@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { resetUserPassword } from '@/api/userAdminApi';
-import { AdminPasswordReset } from '@/types';
+import { AdminPasswordResetSchema } from '@/types';
+import type { AdminPasswordReset } from '@/types';
 import { Key, Eye, EyeOff } from 'lucide-react';
 import FormField from '@/components/FormField';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +21,7 @@ const ResetPasswordModal = ({ userId, disabled }: ResetPasswordModalProps) => {
     const [success, setSuccess] = useState(false);
 
     const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<AdminPasswordReset>({
-        resolver: zodResolver(AdminPasswordReset) as never,
+        resolver: zodResolver(AdminPasswordResetSchema(t)) as never,
     });
 
     const onSubmit = async (data: AdminPasswordReset) => {

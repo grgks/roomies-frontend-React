@@ -22,26 +22,26 @@ export const House = z.object({
 export type House = z.infer<typeof House>;
 
 //HouseInsert
-export const HouseInsert = z.object({
-    address: z.string().min(3).max(40),
-    addressNumber: z.string().max(15),
-    apartment: z.string(),
-    numOfRooms: z.coerce.number().int().min(1).optional(),
-    areaId: z.coerce.number().int(),
+export const HouseInsertSchema = (t: (key: string) => string) => z.object({
+    address: z.string().min(3, t('minChars3')).max(40, t('maxChars40')),
+    addressNumber: z.string().min(1, t('required')).max(15, t('maxChars15')),
+    apartment: z.string().min(1, t('required')),
+    numOfRooms: z.coerce.number().int().min(1, t('minValue1')).optional(),
+    areaId: z.coerce.number({ error: t('required') }).int(),
 });
-export type HouseInsert = z.infer<typeof HouseInsert>;
+export type HouseInsert = z.infer<ReturnType<typeof HouseInsertSchema>>;
 
 
 //HouseUpdate
-export const HouseUpdate =
+export const HouseUpdateSchema = (t: (key: string) => string) =>
     House.omit({id: true, ownerId: true, areaId: true,
     createdAt: true, updatedAt: true })
     .extend({
-        address: z.string().min(3).max(40),
-        addressNumber: z.string().max(15),
-        apartment: z.string(),
+        address: z.string().min(3, t('minChars3')).max(40, t('maxChars40')),
+        addressNumber: z.string().min(1, t('required')).max(15, t('maxChars15')),
+        apartment: z.string().min(1, t('required')),
     })
-export type HouseUpdate = z.infer<typeof HouseUpdate>;
+export type HouseUpdate = z.infer<ReturnType<typeof HouseUpdateSchema>>;
 
 //HouseFilters
 export const HouseFilters = PaginationParams.extend({

@@ -5,17 +5,13 @@ import { z } from 'zod';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { updateTaskById } from '@/api/taskApi';
 import { TaskCategory, TaskStatus } from '@/types/enums';
-import { TaskUpdate } from '@/types';
+import { TaskUpdateSchema } from '@/types';
 import type { Task } from '@/types';
 import { Pencil } from 'lucide-react';
 import FormField from '@/components/FormField';
 import { useTranslation } from 'react-i18next';
 
-// dueDate comes from a datetime-local input (raw string) and is converted to ISO before validating against TaskUpdate
-const EditTaskFormSchema = TaskUpdate.extend({
-    dueDate: z.string().min(1, 'Due date is required'),
-});
-type EditTaskForm = z.infer<typeof EditTaskFormSchema>;
+type EditTaskForm = { taskName: string; taskCategory: string; taskStatus: string; dueDate: string };
 
 interface EditTaskModalProps {
     task: Task;
@@ -24,6 +20,12 @@ interface EditTaskModalProps {
 
 const EditTaskModal = ({ task, onTaskUpdated }: EditTaskModalProps) => {
     const { t } = useTranslation();
+
+    // dueDate comes from a datetime-local input (raw string) and is converted to ISO before validating against TaskUpdate
+    const EditTaskFormSchema = TaskUpdateSchema(t).extend({
+        dueDate: z.string().min(1, t('dueDateIsRequired')),
+    });
+
     const [open, setOpen] = useState(false);
 
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<EditTaskForm>({
