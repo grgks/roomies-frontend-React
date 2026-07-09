@@ -14,7 +14,7 @@ export default defineConfig({
             injectRegister: 'script',
             manifest: {
                 name: 'The Roommies',
-                short_name: 'Roomies',
+                short_name: 'Roommies',
                 description: 'Διαχείριση συγκατοίκησης: έξοδα, εργασίες, μηνύματα & προσκλήσεις σπιτιού. Όλα σε ένα μέρος.',
                 start_url: '/',
                 scope: '/',
