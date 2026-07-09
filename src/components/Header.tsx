@@ -21,7 +21,7 @@ const Header = () => {
             <button
                 onClick={() => setNotifOpen(p => !p)}
                 className="relative text-white/70 hover:text-white transition"
-                title="Notifications">
+                title="Notifications" aria-label={unreadCount > 0 ? `Notifications, ${unreadCount} unread` : "Notifications"}>
                 <Bell size={18} />
                 {unreadCount > 0 && (
                     <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">
@@ -51,10 +51,10 @@ const Header = () => {
                     {/*<span className="text-xs text-white/70">{userEmail}</span>*/}
                     <SettingsModal />
                     {BellButton}
-                    <button onClick={logout} className="text-white/70 hover:text-white transition" title="Logout">
+                    <button onClick={logout} className="text-white/70 hover:text-white transition" title="Logout" aria-label="Logout">
                         <LogOut size={18} />
                     </button>
-                    <button className="text-white" onClick={() => setMenuOpen(!menuOpen)}>
+                    <button className="text-white" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu" aria-expanded={menuOpen}>
                         {menuOpen ? <X size={36} /> : <Menu size={36} />}
                     </button>
                 </div>
@@ -120,7 +120,7 @@ const Header = () => {
                         )}                        <span className="text-xs text-white/70">{userEmail}</span>
                         <SettingsModal />
                         {BellButton}
-                        <button onClick={logout} className="text-white/70 hover:text-white transition" title="Logout">
+                        <button onClick={logout} className="text-white/70 hover:text-white transition" title="Logout" aria-label="Logout">
                             <LogOut size={18}/>
                         </button>
                     </div>

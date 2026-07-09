@@ -59,7 +59,7 @@ const NotificationPanel = ({ open, onClose }: NotificationPanelProps) => {
                                 {t('clearAll')}
                             </button>
                         )}
-                        <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+                        <button onClick={onClose} className="text-slate-400 hover:text-slate-600" aria-label="Close notifications">
                             <X size={15} />
                         </button>
                     </div>

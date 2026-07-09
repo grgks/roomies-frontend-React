@@ -176,7 +176,7 @@ const SettingsModal = () => {
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogDescription className="sr-only">{t('userSettings')}</DialogDescription>
             <DialogTrigger asChild>
-                <button className="text-white/70 hover:text-white transition" title="Settings">
+                <button className="text-white/70 hover:text-white transition" title="Settings" aria-label="Settings">
                     <Settings size={18} />
                 </button>
             </DialogTrigger>
@@ -350,7 +350,7 @@ const SettingsModal = () => {
                                     {errors.currentPassword && (
                                         <p className="text-xs text-red-500 mt-0.5">{errors.currentPassword.message}</p>
                                     )}
-                                    <button type="button" onClick={() => setShowCurrent(p => !p)}
+                                    <button type="button" onClick={() => setShowCurrent(p => !p)} aria-label={showCurrent ? "Hide password" : "Show password"}
                                             className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600">
                                         {showCurrent ? <EyeOff size={15} /> : <Eye size={15} />}
                                     </button>
@@ -365,7 +365,7 @@ const SettingsModal = () => {
                                     {errors.newPassword && (
                                         <p className="text-xs text-red-500 mt-0.5">{errors.newPassword.message}</p>
                                     )}
-                                    <button type="button" onClick={() => setShowNew(p => !p)}
+                                    <button type="button" onClick={() => setShowNew(p => !p)} aria-label={showNew ? "Hide password" : "Show password"}
                                             className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600">
                                         {showNew ? <EyeOff size={15} /> : <Eye size={15} />}
                                     </button>
@@ -380,7 +380,7 @@ const SettingsModal = () => {
                                     {errors.confirmPassword && (
                                         <p className="text-xs text-red-500 mt-0.5">{errors.confirmPassword.message}</p>
                                     )}
-                                    <button type="button" onClick={() => setShowConfirm(p => !p)}
+                                    <button type="button" onClick={() => setShowConfirm(p => !p)} aria-label={showConfirm ? "Hide password" : "Show password"}
                                             className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600">
                                         {showConfirm ? <EyeOff size={15} /> : <Eye size={15} />}
                                     </button>
