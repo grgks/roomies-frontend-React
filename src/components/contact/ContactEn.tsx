@@ -16,7 +16,7 @@ const ContactEn = () => {
                 <div className="flex flex-col gap-4">
 
                     <a href="mailto:roomies@gmail.com"
-                       className="flex items-center gap-4 p-4 bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition group">
+                       className="flex items-center gap-4 p-4 bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition group" aria-label="Email">
                         <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 text-lg">
                             ✉️
                         </div>
@@ -27,7 +27,7 @@ const ContactEn = () => {
                     </a>
 
                     <a href="https://github.com/grgks" target="_blank" rel="noopener noreferrer"
-                       className="flex items-center gap-4 p-4 bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition group">
+                       className="flex items-center gap-4 p-4 bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition group" aria-label="GitHub">
                         <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-700 text-lg">
                             🐙
                         </div>
@@ -38,7 +38,7 @@ const ContactEn = () => {
                     </a>
 
                     <a href="https://www.linkedin.com/in/giorgos-k-882332360/" target="_blank" rel="noopener noreferrer"
-                       className="flex items-center gap-4 p-4 bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition group">
+                       className="flex items-center gap-4 p-4 bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition group" aria-label="LinkedIn">
                         <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-lg">
                             💼
                         </div>

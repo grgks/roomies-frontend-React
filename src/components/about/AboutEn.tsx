@@ -48,11 +48,11 @@ const AboutEn = () => {
                     </p>
                     <div className="flex gap-4">
                         <a href="https://github.com/grgks" target="_blank" rel="noopener noreferrer"
-                           className="text-sm text-indigo-600 hover:text-indigo-800 transition font-medium">
+                           className="text-sm text-indigo-600 hover:text-indigo-800 transition font-medium" aria-label="GitHub">
                             GitHub →
                         </a>
                         <a href="https://www.linkedin.com/in/giorgos-k-882332360/" target="_blank" rel="noopener noreferrer"
-                           className="text-sm text-indigo-600 hover:text-indigo-800 transition font-medium">
+                           className="text-sm text-indigo-600 hover:text-indigo-800 transition font-medium" aria-label="LinkedIn">
                             LinkedIn →
                         </a>
                     </div>
