@@ -4,7 +4,7 @@ import AppRouter from "@/routes/AppRouter.tsx";
 function App()  {
   return (
       <>
-          <AppRouter />;
+          <AppRouter />
       </>
   )
 }
