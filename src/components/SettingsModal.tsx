@@ -63,7 +63,11 @@ const SettingsModal = () => {
 
     const ChangePasswordSchema = z.object({
         currentPassword: z.string().min(1, t('required')),
-        newPassword: z.string().min(8, t('passwordMinChars8')),
+        newPassword: z.string()
+            .min(8, t('passwordMinChars8'))
+            .regex(/[A-Z]/, t('passwordNeedsUppercase'))
+            .regex(/[0-9]/, t('passwordNeedsDigit'))
+            .regex(/[^A-Za-z0-9]/, t('passwordNeedsSpecial')),
         confirmPassword: z.string().min(1, t('required')),
     }).refine(d => d.newPassword === d.confirmPassword, {
         message: t('passwordsDoNotMatch'),

@@ -59,6 +59,10 @@ export type ChangePassword = z.infer<typeof ChangePassword>;
 
 //AdminPasswordReset
 export const AdminPasswordResetSchema = (t: (key: string) => string) => z.object({
-    newPassword: z.string().min(8, t("passwordMinChars8")),
+    newPassword: z.string()
+        .min(8, t('passwordMinChars8'))
+        .regex(/[A-Z]/, t('passwordNeedsUppercase'))
+        .regex(/[0-9]/, t('passwordNeedsDigit'))
+        .regex(/[^A-Za-z0-9]/, t('passwordNeedsSpecial')),
 });
 export type AdminPasswordReset = z.infer<ReturnType<typeof AdminPasswordResetSchema>>;

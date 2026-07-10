@@ -20,7 +20,7 @@
   "settings": "Ρυθμίσεις",
   "changePassword": "Αλλαγή κωδικού",
   "newPassword": "Νέος κωδικός",
-  "currentPassword": "Τρέχοντας κωδικός",
+  "currentPassword": "Τρέχων κωδικός",
   "confirmNewPassword": "Επιβεβαίωση νέου κωδικού",
   "cancel": "Ακύρωση",
   "change": "Αλλαγή",
@@ -115,7 +115,6 @@
   "from": "Από",
   "roommate": "συγκάτοικο",
   "couldNotLoadRatingsMakeSureYouAreUser":"Δε μπορώ να φορτώσω Αξιολογήσεις.Σιγουρέψου ότι είσαι Συγκάτοικος",
-
   "myRatings": "Οι Αξιολογήσεις Μου",
   "givenRatings": "Βαθμολογίες που έδωσα",
   "noGivenRatingsYet": "Χωρίς αξιολογήσεις ακόμη.",
@@ -304,5 +303,8 @@
   "messageIsRequired": "Το μήνυμα είναι υποχρεωτικό",
   "messageMaxChars3000": "Το μήνυμα πρέπει να είναι κάτω από 3000 χαρακτήρες",
   "required": "Υποχρεωτικό",
-  "passwordsDoNotMatch": "Οι κωδικοί δεν ταιριάζουν"
+  "passwordsDoNotMatch": "Οι κωδικοί δεν ταιριάζουν",
+  "passwordNeedsUppercase": "Πρέπει να περιέχει τουλάχιστον 1 κεφαλαίο γράμμα",
+  "passwordNeedsDigit": "Πρέπει να περιέχει τουλάχιστον 1 ψηφίο",
+  "passwordNeedsSpecial": "Πρέπει να περιέχει τουλάχιστον 1 ειδικό χαρακτήρα"
 }

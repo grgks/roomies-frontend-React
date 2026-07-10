@@ -301,6 +301,9 @@
   "messageIsRequired": "Message is required",
   "messageMaxChars3000": "Message must be under 3000 characters",
   "required": "Required",
-  "passwordsDoNotMatch": "Passwords do not match"
+  "passwordsDoNotMatch": "Passwords do not match",
+  "passwordNeedsUppercase": "Must contain at least 1 uppercase letter",
+  "passwordNeedsDigit": "Must contain at least 1 digit",
+  "passwordNeedsSpecial": "Must contain at least 1 special character"
 
 }
