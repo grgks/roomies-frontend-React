@@ -6,6 +6,7 @@ import axios from 'axios';
 const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
     withCredentials: true,
+    timeout: 15000,
 });
 
 // Custom header για CSRF protection - triggers CORS preflight in cross-site requests,
@@ -36,6 +37,11 @@ axiosInstance.interceptors.response.use(
     response => response,
     async error => {
         const originalRequest = error.config;
+
+        // // Log timeout errors
+        // if (error.code === 'ECONNABORTED') {
+        //     console.error('Request timed out:', error.config?.url);
+        // }
 
         // Avoid infinite loop - don't retry refresh endpoint itself
         if (error.response?.status === 401 && !originalRequest._retry &&

@@ -20,90 +20,100 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [isSuperAdmin, setIsSuperAdmin] = useState(false);
 
     useEffect(() => {
-        keycloak
-            .init({
-                onLoad: 'check-sso',
-                silentCheckSsoRedirectUri: window.location.origin + '/silent-check-sso.html',
-                pkceMethod: 'S256',
-            })
-            .then(async (authenticated) => {
+        const initAuth = async () => {
+            try {
+                const authenticated = await keycloak.init({
+                    onLoad: 'check-sso',
+                    silentCheckSsoRedirectUri:
+                        window.location.origin + '/silent-check-sso.html',
+                    pkceMethod: 'S256',
+                });
 
-                if (authenticated) {
-                    // Send token directly to backend -> backend sets httpOnly cookies
-                    //PKCE (Proof Key for Code Exchange)
-                    //code_verifier = random string (secret)
-                    // code_challenge = SHA256(code_verifier)
-                    const code = new URLSearchParams(window.location.search).get('code');
-                    const codeVerifier = sessionStorage.getItem('kc-pkce-code-verifier');
+                if (!authenticated) {
+                    return;
+                }
 
-                    if (code && codeVerifier) {
-                        // Authorization code flow = after redirect from Keycloak
-                        try {
-                            await axiosInstance.post('/api/auth/callback', {
-                                code,
-                                redirectUri: window.location.origin,
-                                codeVerifier,
-                            });
-                        } catch {
-                            // cookies may already exist from previous session
-                        }
-                    } else if (keycloak.token) {
-                        // Silent SSO — token already in memory, send directly to backend
-                        try {
-                            await axiosInstance.post('/api/auth/token', {
-                                accessToken: keycloak.token,
-                                refreshToken: keycloak.refreshToken,
-                                expiresIn: keycloak.tokenParsed?.exp ?? 300,
-                                refreshExpiresIn: 1800,
-                            });
-                        } catch {
-                            // ignore
-                        }
-                    }
-                    // Lazy sync - creates User in DB on first login
+                // Send token directly to backend -> backend sets httpOnly cookies
+                const code = new URLSearchParams(window.location.search).get('code');
+                const codeVerifier = sessionStorage.getItem('kc-pkce-code-verifier');
+
+                if (code && codeVerifier) {
                     try {
-                        await initializeUser();
+                        await axiosInstance.post('/api/auth/callback', {
+                            code,
+                            redirectUri: window.location.origin,
+                            codeVerifier,
+                        });
                     } catch {
-                        // user may already exist
+                        // cookies may already exist from previous session
                     }
-
+                } else if (keycloak.token) {
                     try {
-                        const user = await getMe();
-                        setAvatarId(user.avatarId);
+                        await axiosInstance.post('/api/auth/token', {
+                            accessToken: keycloak.token,
+                            refreshToken: keycloak.refreshToken,
+                            expiresIn: keycloak.tokenParsed?.exp ?? 300,
+                            refreshExpiresIn: 1800,
+                        });
                     } catch {
                         // ignore
                     }
-
-                    // Check if Roommate exists- fetch roommateId
-                    try {
-                        const res =await axiosInstance.get('/api/roommate/me');
-                        setHasRoommate(true);
-                        setRoommateId(res.data.id);
-                    } catch {
-                        setHasRoommate(false);
-                    }
-
-                    // Fetch houseId
-                    try {
-                        const res = await axiosInstance.get('/api/house/my');
-                        setHouseId(res.data.id);
-                    } catch {
-                        // user may not have a house yet
-                    }
-
-                    setUserEmail(keycloak.tokenParsed?.email);
-                    const roles = (keycloak.tokenParsed as { realm_access?: { roles?: string[] } })
-                        ?.realm_access?.roles ?? [];
-
-                    setIsSuperAdmin(roles.includes('SUPER_ADMIN'));
-                    setIsAdmin(roles.includes('SUPER_ADMIN') || roles.includes('LIGHT_ADMIN'));
-                    setIsAuthenticated(true);
                 }
-                setIsLoading(false);
-            })
-            .catch(() => setIsLoading(false));
-        }, []);
 
+                // Lazy sync - creates User in DB on first login
+                try {
+                    await initializeUser();
+                } catch {
+                    // user may already exist
+                }
+
+                try {
+                    const user = await getMe();
+                    setAvatarId(user.avatarId);
+                } catch {
+                    // ignore
+                }
+
+                // Check if Roommate exists
+                try {
+                    const res = await axiosInstance.get('/api/roommate/me');
+                    setHasRoommate(true);
+                    setRoommateId(res.data.id);
+                } catch {
+                    setHasRoommate(false);
+                }
+
+                // Fetch houseId
+                try {
+                    const res = await axiosInstance.get('/api/house/my');
+                    setHouseId(res.data.id);
+                } catch {
+                    setHouseId(null);
+                }
+
+                setUserEmail(keycloak.tokenParsed?.email);
+
+                const roles =
+                    (keycloak.tokenParsed as {
+                        realm_access?: { roles?: string[] };
+                    })?.realm_access?.roles ?? [];
+
+                setIsSuperAdmin(roles.includes('SUPER_ADMIN'));
+                setIsAdmin(
+                    roles.includes('SUPER_ADMIN') ||
+                    roles.includes('LIGHT_ADMIN')
+                );
+
+                setIsAuthenticated(true);
+            } catch (error) {
+                console.error('Auth initialization failed:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        initAuth();
+    }, []);
     const login = () => keycloak.login({
             redirectUri: window.location.origin + '/callback',
         });
