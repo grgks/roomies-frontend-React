@@ -6,7 +6,7 @@ import axios from 'axios';
 const axiosInstance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
     withCredentials: true,
-    timeout: 15000,
+    timeout: 10000,
 });
 
 // Custom header για CSRF protection - triggers CORS preflight in cross-site requests,
