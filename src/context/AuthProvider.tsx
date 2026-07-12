@@ -22,12 +22,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         const initAuth = async () => {
             try {
-                const authenticated = await keycloak.init({
-                    onLoad: 'check-sso',
-                    silentCheckSsoRedirectUri:
-                        window.location.origin + '/silent-check-sso.html',
-                    pkceMethod: 'S256',
-                });
+                const authenticated = await Promise.race([
+                    keycloak.init({
+                        onLoad: 'check-sso',
+                        silentCheckSsoRedirectUri:
+                            window.location.origin + '/silent-check-sso.html',
+                        pkceMethod: 'S256',
+                    }),
+                    new Promise<boolean>((_, reject) =>
+                        setTimeout(() => reject(new Error('Auth timeout')), 10000)
+                    ),
+                ]);
 
                 if (!authenticated) {
                     return;
