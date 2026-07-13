@@ -11,6 +11,7 @@ import {getMyHouse} from "@/api/houseApi.ts";
 import {getActiveRoommates} from "@/api/roommateApi.ts";
 import {useTranslation} from "react-i18next";
 import {Link} from "react-router";
+import AiReportCard from "@/components/AiReportCard.tsx";
 
 const DashboardPage = () => {
     const { houseId, refreshAuth } = useAuth();
@@ -68,6 +69,13 @@ const DashboardPage = () => {
                                 ))}
                             </div>
                         </div>
+                    </div>
+                )}
+
+                {/*AI Report*/}
+                {houseId !== null && (
+                    <div className="absolute text-center" style={{ top: '30.5%', left: '50%', transform: 'translateX(-50%)' }}>
+                        <AiReportCard houseId={houseId} />
                     </div>
                 )}
 

@@ -304,6 +304,13 @@
   "passwordsDoNotMatch": "Passwords do not match",
   "passwordNeedsUppercase": "Must contain at least 1 uppercase letter",
   "passwordNeedsDigit": "Must contain at least 1 digit",
-  "passwordNeedsSpecial": "Must contain at least 1 special character"
+  "passwordNeedsSpecial": "Must contain at least 1 special character",
+  "aiHouseReport": "AI House Report",
+  "generateReport": "Generate Report",
+  "generatingReport": "Generating report...",
+  "couldNotGenerateReport": "Could not generate report",
+  "tryAgain": "Try again",
+  "refresh": "Refresh",
+  "close": "Close"
 
 }

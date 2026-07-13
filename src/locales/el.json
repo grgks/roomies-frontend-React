@@ -306,5 +306,12 @@
   "passwordsDoNotMatch": "Οι κωδικοί δεν ταιριάζουν",
   "passwordNeedsUppercase": "Πρέπει να περιέχει τουλάχιστον 1 κεφαλαίο γράμμα",
   "passwordNeedsDigit": "Πρέπει να περιέχει τουλάχιστον 1 ψηφίο",
-  "passwordNeedsSpecial": "Πρέπει να περιέχει τουλάχιστον 1 ειδικό χαρακτήρα"
+  "passwordNeedsSpecial": "Πρέπει να περιέχει τουλάχιστον 1 ειδικό χαρακτήρα",
+  "aiHouseReport": "AI Αναφορά Σπιτιού",
+  "generateReport": "Δημιουργία Αναφοράς",
+  "generatingReport": "Δημιουργία αναφοράς...",
+  "couldNotGenerateReport": "Δεν ήταν δυνατή η δημιουργία αναφοράς",
+  "tryAgain": "Δοκιμάστε ξανά",
+  "refresh": "Ανανέωση",
+  "close": "Κλείσιμο"
 }
