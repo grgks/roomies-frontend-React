@@ -5,7 +5,7 @@ import RoomiesLogo from "./RoomiesLogo";
 import useAuth from "@/hooks/useAuth.ts";
 import {AVATARS, NAV_LINKS} from "@/utils/constants.ts";
 import SettingsModal from "@/components/SettingsModal.tsx";
-import { useNotifications } from "@/context/NotificationContext.tsx";
+import  useNotifications  from "@/hooks/useNotifications";
 import NotificationPanel from '@/components/NotificationPanel';
 import {useTranslation} from "react-i18next";
 
