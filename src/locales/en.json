@@ -311,6 +311,8 @@
   "couldNotGenerateReport": "Could not generate report",
   "tryAgain": "Try again",
   "refresh": "Refresh",
-  "close": "Close"
+  "close": "Close",
+  "markAllRead": "Mark all read",
+  "unread": "Unread"
 
 }
