@@ -10,6 +10,9 @@ export default defineConfig({
         react(),
         tailwindcss(),
         VitePWA({
+            strategies: 'injectManifest',
+            srcDir: 'src',
+            filename: 'sw.ts',
             registerType: 'autoUpdate',
             injectRegister: 'script',
             manifest: {
@@ -31,27 +34,8 @@ export default defineConfig({
                     { src: '/roomies-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
                 ],
             },
-            workbox: {
-                skipWaiting: true,
-                clientsClaim: true,
+            injectManifest: {
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
-                navigateFallback: 'index.html',
-                navigateFallbackDenylist: [/^\/api/],
-                cleanupOutdatedCaches: true,
-                runtimeCaching: [
-                    {
-                        urlPattern: /^https:\/\/api\.theroommies\.gr\/.*/,
-                        handler: 'NetworkOnly',
-                    },
-                    {
-                        urlPattern: /^https:\/\/keycloak-prod-production-7079\.up\.railway\.app\/.*/,
-                        handler: 'NetworkOnly',
-                    },
-                    {
-                        urlPattern: /\/api\/.*/,
-                        handler: 'NetworkOnly',
-                    },
-                ],
             },
             devOptions: {
                 enabled: false,
