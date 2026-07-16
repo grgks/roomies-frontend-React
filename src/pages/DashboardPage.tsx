@@ -12,6 +12,7 @@ import {getActiveRoommates} from "@/api/roommateApi.ts";
 import {useTranslation} from "react-i18next";
 import {Link} from "react-router";
 import AiReportCard from "@/components/AiReportCard.tsx";
+import {usePushNotifications} from "@/hooks/usePushNotifications.ts";
 
 const DashboardPage = () => {
     const { houseId, refreshAuth } = useAuth();
@@ -21,11 +22,20 @@ const DashboardPage = () => {
     const [house, setHouse] = useState<House | null>(null);
     const [roommates, setRoommates] = useState<Roommate[]>([]);
 
+    const { requestPushPermission } = usePushNotifications();
+
     // Always re-check houseId on mount. AuthContext can be stale if it was
     // updated elsewhere (e.g. accepting an invitation) before navigating away
     // and back to this page.
     useEffect(() => {
         refreshAuth();
+    }, []);
+
+    // Request push notification permission once after login.
+    // The browser remembers the user's choice. if already granted or denied,
+    // it won't show the prompt again. Only triggers on first visit.
+    useEffect(() => {
+        requestPushPermission();
     }, []);
 
     useEffect(() => {
