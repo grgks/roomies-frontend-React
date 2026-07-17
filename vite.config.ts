@@ -26,6 +26,7 @@ export default defineConfig({
                 theme_color: '#563773',
                 lang: 'el',
                 dir: 'ltr',
+                gcm_sender_id: '103953800507',
                 categories: ['lifestyle', 'productivity', 'social'],
                 icons: [
                     { src: '/roomies-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
@@ -33,7 +34,7 @@ export default defineConfig({
                     { src: '/roomies-maskable-192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable' },
                     { src: '/roomies-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
                 ],
-            },
+            } as any,
             injectManifest: {
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
             },
