@@ -6,11 +6,11 @@ import { NetworkOnly } from 'workbox-strategies';
 
 declare let self: ServiceWorkerGlobalScope;
 
-//Workbox precaching (same as before, injected by VitePWA at build time)
+// Workbox precaching (injected by VitePWA at build time)
 precacheAndRoute(self.__WB_MANIFEST);
 cleanupOutdatedCaches();
 
-// Skip waiting + claim clients (same as before)
+// Skip waiting + claim clients
 self.addEventListener('install', () => {
     self.skipWaiting();
 });
@@ -33,7 +33,7 @@ registerRoute(
     new NetworkOnly()
 );
 
-//Navigate fallback (SPA routing)
+// Navigate fallback (SPA routing)
 const navHandler = createHandlerBoundToURL('/index.html');
 const navigationRoute = new NavigationRoute(navHandler, {
     denylist: [/^\/api/],
@@ -42,42 +42,16 @@ registerRoute(navigationRoute);
 
 
 // WEB PUSH NOTIFICATIONS
-
 /**
  * Fired when the push service delivers a message to this SW.
- * The backend sends a JSON payload: { title: "...", body: "..." }
- * We parse it and show a system-level notification via the OS.
- */
-self.addEventListener('push', (event: PushEvent) => {
-
-    if (!event.data) return;
-
-    try {
-        const data = event.data.json();
-        const title = data.title || 'Roommies';
-        const options: NotificationOptions = {
-            body: data.body || '',
-            icon: '/roomies-192.png',
-            badge: '/roomies-192.png',
-            tag: 'roommies-notification',
-            data: { url: '/' },
-        };
-
-        event.waitUntil(
-            self.registration.showNotification(title, options)
-        );
-    } catch (e) {
-        console.error('Push event parse error:', e);
-    }
-});
-/**
- * Fired when the user clicks/taps the system notification.
- * Opens the app or focuses an existing tab.
+ * Handles both with and without payload:
+ * - With payload: shows title + body from JSON
+ * - Without payload: shows default "Νέα ειδοποίηση"
  */
 self.addEventListener('push', (event: PushEvent) => {
     let title = 'Roommies';
-    let options: NotificationOptions = {
-        body: 'Νέα ειδοποίηση',
+    const options: NotificationOptions = {
+        body: 'New notification',
         icon: '/roomies-192.png',
         badge: '/roomies-192.png',
         tag: 'roommies-notification',
@@ -96,5 +70,27 @@ self.addEventListener('push', (event: PushEvent) => {
 
     event.waitUntil(
         self.registration.showNotification(title, options)
+    );
+});
+
+/**
+ * Fired when the user clicks/taps the system notification.
+ * Opens the app or focuses an existing tab.
+ */
+self.addEventListener('notificationclick', (event: NotificationEvent) => {
+    event.notification.close();
+
+    const urlToOpen = event.notification.data?.url || '/';
+
+    event.waitUntil(
+        self.clients.matchAll({ type: 'window', includeUncontrolled: true })
+            .then((clientList) => {
+                for (const client of clientList) {
+                    if (client.url.includes(self.location.origin)) {
+                        return client.focus();
+                    }
+                }
+                return self.clients.openWindow(urlToOpen);
+            })
     );
 });
