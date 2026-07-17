@@ -75,33 +75,26 @@ self.addEventListener('push', (event: PushEvent) => {
  * Opens the app or focuses an existing tab.
  */
 self.addEventListener('push', (event: PushEvent) => {
-    console.log('PUSH RECEIVED');
-    console.log('Has data:', !!event.data);
+    let title = 'Roommies';
+    let options: NotificationOptions = {
+        body: 'Νέα ειδοποίηση',
+        icon: '/roomies-192.png',
+        badge: '/roomies-192.png',
+        tag: 'roommies-notification',
+        data: { url: '/' },
+    };
 
-    if (!event.data) {
-        console.log('No data in push');
-        return;
+    if (event.data) {
+        try {
+            const data = event.data.json();
+            title = data.title || title;
+            options.body = data.body || options.body;
+        } catch (e) {
+            console.error('Push event parse error:', e);
+        }
     }
 
-    try {
-        const rawText = event.data.text();
-        console.log('Raw push data:', rawText);
-        const data = JSON.parse(rawText);
-        console.log('Parsed:', JSON.stringify(data));
-
-        const title = data.title || 'Roommies';
-        const options: NotificationOptions = {
-            body: data.body || '',
-            icon: '/roomies-192.png',
-            badge: '/roomies-192.png',
-            tag: 'roommies-notification',
-            data: { url: '/' },
-        };
-
-        event.waitUntil(
-            self.registration.showNotification(title, options)
-        );
-    } catch (e) {
-        console.error('Push event parse error:', e);
-    }
+    event.waitUntil(
+        self.registration.showNotification(title, options)
+    );
 });
