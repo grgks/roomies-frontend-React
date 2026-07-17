@@ -74,22 +74,34 @@ self.addEventListener('push', (event: PushEvent) => {
  * Fired when the user clicks/taps the system notification.
  * Opens the app or focuses an existing tab.
  */
-self.addEventListener('notificationclick', (event: NotificationEvent) => {
-    event.notification.close();
+self.addEventListener('push', (event: PushEvent) => {
+    console.log('PUSH RECEIVED');
+    console.log('Has data:', !!event.data);
 
-    const urlToOpen = event.notification.data?.url || '/';
+    if (!event.data) {
+        console.log('No data in push');
+        return;
+    }
 
-    event.waitUntil(
-        self.clients.matchAll({ type: 'window', includeUncontrolled: true })
-            .then((clientList) => {
-                // If the app is already open, focus it
-                for (const client of clientList) {
-                    if (client.url.includes(self.location.origin)) {
-                        return client.focus();
-                    }
-                }
-                // Otherwise open a new tab/window
-                return self.clients.openWindow(urlToOpen);
-            })
-    );
+    try {
+        const rawText = event.data.text();
+        console.log('Raw push data:', rawText);
+        const data = JSON.parse(rawText);
+        console.log('Parsed:', JSON.stringify(data));
+
+        const title = data.title || 'Roommies';
+        const options: NotificationOptions = {
+            body: data.body || '',
+            icon: '/roomies-192.png',
+            badge: '/roomies-192.png',
+            tag: 'roommies-notification',
+            data: { url: '/' },
+        };
+
+        event.waitUntil(
+            self.registration.showNotification(title, options)
+        );
+    } catch (e) {
+        console.error('Push event parse error:', e);
+    }
 });
