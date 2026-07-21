@@ -313,6 +313,7 @@
   "refresh": "Refresh",
   "close": "Close",
   "markAllRead": "Mark all read",
-  "unread": "Unread"
+  "unread": "Unread",
+  "locale": "en"
 
 }
