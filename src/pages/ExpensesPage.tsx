@@ -19,6 +19,7 @@ import {getActiveRoommates} from "@/api/roommateApi.ts";
 import ExpenseInfoModal from "@/components/ExpenseInfoModal.tsx";
 import {useTranslation} from "react-i18next";
 import usePageTitle from "@/hooks/usePageTitle.ts";
+import {formatMonthLabel, groupByMonth} from "@/utils/dateGrouping.ts";
 
 const ExpensesPage = () => {
     const { houseId, roommateId } = useAuth();
@@ -72,7 +73,6 @@ const ExpensesPage = () => {
             //console.error('Could not mark split as paid');
         }
     };
-
     if (loading) {
         return (
             <Layout>
@@ -100,6 +100,22 @@ const ExpensesPage = () => {
         if (dateTo && new Date(s.createdAt) > new Date(dateTo)) return false;
         return true;
     });
+
+    // Group data by month for month separator rows in tables.
+    // Uses createdAt as the anchor date (interpretation: "when the expense was paid").
+    // Both totals reflect only the visible items (filteredSplits respects filters).
+    const groupedSplits = groupByMonth(
+        filteredSplits,
+        (s) => s.createdAt,
+        (s) => s.amount
+    );
+    const groupedExpenses = groupByMonth(
+        expenses,
+        (e) => e.createdAt,
+        (e) => e.amount
+    );
+
+    const currentLocale = t("locale") !== "locale" ? t("locale") : undefined;
 
     return (
         <Layout>
@@ -147,47 +163,57 @@ const ExpensesPage = () => {
                         color="indigo"
                         columns={["Status", t('expenses'), t('owedTo'),
                             t('amount'), t('paid'), ""]}
-                        isEmpty={splits.length === 0}
+                        isEmpty={filteredSplits.length === 0}
                         emptyMessage={('noSplitsYet')}
                         maxHeight="400px"
 
                     >
-                        {filteredSplits.map((split) => (
-                            <tr key={split.id} id={`split-${split.id}`}>
-                                <td id={`split-status-${split.id}`} className="px-5 py-3">
-                                    {split.isPaid
-                                        ? <CheckCircle size={18} className="text-green-500" />
-                                        : <XCircle size={18} className="text-red-400" />
-                                    }
-                                </td>
-                                <td id={`split-description-${split.id}`} className="px-5 py-3 font-medium text-slate-700">
-                                    {getExpenseDescription(expenses, split.expenseId)}
-                                </td>
-                                <td id={`split-owedto-${split.id}`} className="px-5 py-3 text-slate-500">
-                                    {t(getExpensePaidBy(expenses, roommates, split.expenseId))}
-                                    {expenses.find(e => e.id === split.expenseId)?.paidById === roommateId && (
-                                        <span className="ml-2 text-xs bg-blue-300 text-indigo-700 px-2 py-0.5 rounded-full">{t('owner')}</span>
-                                    )}
-                                </td>
-                                <td id={`split-amount-${split.id}`} className={`px-5 py-3 text-right font-semibold ${split.isPaid ? "text-green-600" : "text-red-500"}`}>
-                                    €{split.amount}
-                                </td>
-                                <td id={`split-action-${split.id}`} className="px-5 py-3">
-                                    <input
-                                        type="checkbox"
-                                        checked={split.isPaid}
-                                        disabled={split.isPaid}
-                                        onChange={() => onMarkAsPaid(split.id)}
-                                        className="w-4 h-4 accent-green-500 cursor-pointer disabled:cursor-default"
-                                    />
-                                </td>
-                                <td className="px-5 py-3">
-                                    <ExpenseSplitInfoModal
-                                        split={split}
-                                        createdByName={t(getRoommateName(roommates, split.roommateId))}
-                                    />
-                                </td>
-                            </tr>
+                        {groupedSplits.map((group) => (
+                            <>
+                                {/* Month separator row  */}
+                                <tr key={`split-month-${group.monthKey}`} className="bg-slate-200/60">
+                                    <td colSpan={6} className="px-5 py-2 font-bold text-slate-700 text-sm">
+                                        {formatMonthLabel(group.year, group.month, currentLocale)} : €{group.total.toFixed(2)}
+                                    </td>
+                                </tr>
+                                {group.items.map((split) => (
+                                    <tr key={split.id} id={`split-${split.id}`}>
+                                        <td id={`split-status-${split.id}`} className="px-5 py-3">
+                                            {split.isPaid
+                                                ? <CheckCircle size={18} className="text-green-500" />
+                                                : <XCircle size={18} className="text-red-400" />
+                                            }
+                                        </td>
+                                        <td id={`split-description-${split.id}`} className="px-5 py-3 font-medium text-slate-700">
+                                            {getExpenseDescription(expenses, split.expenseId)}
+                                        </td>
+                                        <td id={`split-owedto-${split.id}`} className="px-5 py-3 text-slate-500">
+                                            {t(getExpensePaidBy(expenses, roommates, split.expenseId))}
+                                            {expenses.find(e => e.id === split.expenseId)?.paidById === roommateId && (
+                                                <span className="ml-2 text-xs bg-blue-300 text-indigo-700 px-2 py-0.5 rounded-full">{t('owner')}</span>
+                                            )}
+                                        </td>
+                                        <td id={`split-amount-${split.id}`} className={`px-5 py-3 text-right font-semibold ${split.isPaid ? "text-green-600" : "text-red-500"}`}>
+                                            €{split.amount}
+                                        </td>
+                                        <td id={`split-action-${split.id}`} className="px-5 py-3">
+                                            <input
+                                                type="checkbox"
+                                                checked={split.isPaid}
+                                                disabled={split.isPaid}
+                                                onChange={() => onMarkAsPaid(split.id)}
+                                                className="w-4 h-4 accent-green-500 cursor-pointer disabled:cursor-default"
+                                            />
+                                        </td>
+                                        <td className="px-5 py-3">
+                                            <ExpenseSplitInfoModal
+                                                split={split}
+                                                createdByName={t(getRoommateName(roommates, split.roommateId))}
+                                            />
+                                        </td>
+                                    </tr>
+                                ))}
+                            </>
                         ))}
                     </PageTable>
                     </div>
@@ -204,28 +230,38 @@ const ExpensesPage = () => {
                         maxHeight="400px"
 
                     >
-                        {expenses.map((expense) => (
-                            <tr key={expense.id} id={`expense-${expense.id}`}>
-                                <td id={`expense-description-${expense.id}`} className="px-5 py-3 font-medium text-slate-700">
-                                    {expense.description}
-                                </td>
-                                <td id={`expense-paidby-${expense.id}`} className="px-5 py-3 text-slate-500">
-                                    {t(getRoommateName(roommates, expense.paidById))}
-                                    {expense.paidById === roommateId && (
-                                        <span className="ml-2 text-xs bg-blue-300 text-indigo-700 px-2 py-0.5 rounded-full">{t('owner')}</span>
-                                    )}
-                                </td>
-                                <td id={`expense-amount-${expense.id}`} className="px-5 py-3 text-right font-semibold text-violet-700">
-                                    €{expense.amount}
-                               </td>
-                                <td className="px-5 py-3">
-                                    <ExpenseInfoModal
-                                        expense={expense}
-                                        paidByName={t(getRoommateName(roommates, expense.paidById))}
-                                        roommates={roommates}
-                                    />
-                                </td>
-                            </tr>
+                        {groupedExpenses.map((group) => (
+                            <>
+                                {/* Month separator row */}
+                                <tr key={`expense-month-${group.monthKey}`} className="bg-slate-200/60">
+                                    <td colSpan={4} className="px-5 py-2 font-bold text-slate-700 text-sm">
+                                        {formatMonthLabel(group.year, group.month, currentLocale)}  : €{group.total.toFixed(2)}
+                                    </td>
+                                </tr>
+                                {group.items.map((expense) => (
+                                    <tr key={expense.id} id={`expense-${expense.id}`}>
+                                        <td id={`expense-description-${expense.id}`} className="px-5 py-3 font-medium text-slate-700">
+                                            {expense.description}
+                                        </td>
+                                        <td id={`expense-paidby-${expense.id}`} className="px-5 py-3 text-slate-500">
+                                            {t(getRoommateName(roommates, expense.paidById))}
+                                            {expense.paidById === roommateId && (
+                                                <span className="ml-2 text-xs bg-blue-300 text-indigo-700 px-2 py-0.5 rounded-full">{t('owner')}</span>
+                                            )}
+                                        </td>
+                                        <td id={`expense-amount-${expense.id}`} className="px-5 py-3 text-right font-semibold text-violet-700">
+                                            €{expense.amount}
+                                        </td>
+                                        <td className="px-5 py-3">
+                                            <ExpenseInfoModal
+                                                expense={expense}
+                                                paidByName={t(getRoommateName(roommates, expense.paidById))}
+                                                roommates={roommates}
+                                            />
+                                        </td>
+                                    </tr>
+                                ))}
+                            </>
                         ))}
                     </PageTable>
                     <div>
