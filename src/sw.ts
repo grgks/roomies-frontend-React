@@ -25,7 +25,7 @@ registerRoute(
     new NetworkOnly()
 );
 registerRoute(
-    /^https:\/\/keycloak-prod-production-7079\.up\.railway\.app\/.*/,
+    /^https:\/\/auth\.theroommies\.gr\/.*/,
     new NetworkOnly()
 );
 registerRoute(
