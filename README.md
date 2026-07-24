@@ -29,8 +29,9 @@ The app is installable on mobile and desktop as a PWA, works offline for its she
 | **Forms & Validation** | React Hook Form, Zod |
 | **Routing** | React Router v7 |
 | **i18n** | react-i18next (el / en) |
-| **PWA** | vite-plugin-pwa (Workbox) |
+| **PWA** | vite-plugin-pwa (`injectManifest` mode, custom service worker) |
 | **Telemetry** | Azure Application Insights (cookieless) |
+| **Push Notifications** | Web Push API + VAPID (via backend `jose4j` ES256) |
 
 ---
 
@@ -40,8 +41,11 @@ The app is installable on mobile and desktop as a PWA, works offline for its she
 - **Task management** - assign, filter by status, due dates, overdue tracking
 - **Ratings** - rate roommates with a half-life weighted scoring algorithm
 - **Real-time messaging** - encrypted messages over WebSocket / STOMP
+- **Persisted notifications** - Bell icon panel with All / Unread tabs, mark-as-read, delivered live via STOMP and fetched via REST for offline catch-up
+- **Web Push notifications** - system-level browser notifications when the app is closed (Android, desktop, iOS as PWA)
+- **AI-powered house report** - on-demand summary of house activity via Google Gemini, with anonymized data (roommate names replaced before being sent to the AI), 24-hour cooldown cache
 - **House invitations** - invite, accept, cancel flows
-- **Admin dashboard** - house/roommate/expense/task management for administrators
+- **Admin dashboard** - full house management with tabbed views (Roommates / Tasks / Expenses / Invitations), edit/change owner modals, roommates-without-house page, user management with activate/deactivate/reset password/hard-delete actions, all gated by `SUPER_ADMIN` role
 - **Bilingual** - full Greek & English support with runtime language switching
 - **Installable PWA** - add to home screen on Android / iOS, offline app shell
 
@@ -59,6 +63,10 @@ The frontend is built around a few deliberate design decisions:
 
 **Real-time layer.** A STOMP-over-WebSocket connection delivers live notifications and messages. The service worker deliberately leaves WebSocket traffic untouched, so real-time features work seamlessly alongside PWA caching.
 
+**Route-level code splitting.** All page components are lazily loaded via `React.lazy` + `Suspense`, with a `LoadSpinner` fallback. The initial bundle dropped from ~1.2 MB to ~655 KB (vendors), and each page ships as a small 1–18 KB chunk that's fetched on demand. `LoginPage` is deliberately eager since it's the first thing an unauthenticated user sees.
+
+**Translatable Zod schemas.** All validation schemas are built as factory functions that accept the i18n `t()` function (e.g. `makeLoginSchema(t)`). This means the same schema produces localized error messages in Greek or English depending on the active locale, without duplicating validation logic.
+
 ---
 
 ## 🔒 Security
@@ -71,7 +79,7 @@ Security was a first-class concern throughout:
 - **Cookieless telemetry** - Application Insights configured without cookies (no consent banner needed, GDPR-friendly)
 - **EU data residency** - all services hosted in the EU (Amsterdam) region
 - **Additional headers** - `X-Content-Type-Options`, `Cross-Origin-Opener-Policy`, `Referrer-Policy`
-
+- **Password strength enforcement** - client-side Zod rules match Keycloak server-side password policy (minimum length, upper/lower/digit/special character), so users get instant feedback that mirrors what the backend will actually accept
 ---
 
 ## 📱 PWA
@@ -79,19 +87,26 @@ Security was a first-class concern throughout:
 The app is a fully installable Progressive Web App:
 
 - Web App Manifest with maskable icons (192 / 512) and Apple touch icon
-- Service worker (Workbox via vite-plugin-pwa) with `autoUpdate`
+- Custom service worker (`sw.ts`) via vite-plugin-pwa `injectManifest` mode. Full control over lifecycle, caching, and push event handling
 - **App-shell caching only**. API and Keycloak requests are `NetworkOnly`, so users always see live data
 - Custom install prompt (Android one-tap via `beforeinstallprompt`, iOS instructions fallback)
+- **Web Push support** Service worker listens for `push` events and displays system notifications even when the app is closed
+---
 
 ---
+
+## 📜 Legal & Feedback
+
+- **Privacy Policy** (`/privacy`) - GDPR-compliant, bilingual (el/en), discloses Azure Application Insights as processor, EU data residency (Amsterdam), and cookieless telemetry approach
+- **Terms of Service** (`/terms`) - bilingual, covers acceptable use and roommate-dispute liability limitation
+- **Beta feedback form** - embedded Microsoft Forms link for users to report issues and rate the experience during beta
 
 ## 🛠️ Getting Started
 
 ### Prerequisites
 
-- **Node.js** 20+ and npm
-- A running instance of the Roomies backend API + Keycloak (see environment variables below)
-
+- **Node.js** 20+ and npm (Node 22 LTS recommended)
+- A running instance of the [Roomies backend API](https://github.com/grgks/roomies-RestAPI) + Keycloak (see environment variables below)
 ### Installation
 
 ```bash
