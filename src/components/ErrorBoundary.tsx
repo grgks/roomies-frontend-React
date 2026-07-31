@@ -1,5 +1,6 @@
-import { Component, type ReactNode } from 'react';
+import {Component, type ErrorInfo, type ReactNode} from 'react';
 import {withTranslation, type WithTranslation} from "react-i18next";
+import * as Sentry from '@sentry/react';
 
 interface Props extends WithTranslation{
     children: ReactNode;
@@ -14,6 +15,21 @@ class ErrorBoundary extends Component<Props, State> {
 
     static getDerivedStateFromError(): State {
         return { hasError: true };
+    }
+
+    /**
+     * Reports the caught error to Sentry with the React component stack.
+     * Sentry is only initialized in production (see sentry.config.ts). In
+     * development this call is a no-op.
+     */
+    componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+        Sentry.captureException(error, {
+            contexts: {
+                react: {
+                    componentStack: errorInfo.componentStack,
+                },
+            },
+        });
     }
 
     render() {

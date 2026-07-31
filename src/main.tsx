@@ -1,4 +1,9 @@
-import './lib/appInsights';
+import { initSentry } from './sentry.config';
+
+// Initialize error tracking BEFORE any other code runs
+// so we can capture errors from React initialization itself
+initSentry();
+
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'

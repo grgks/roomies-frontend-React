@@ -12,7 +12,7 @@
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.9",
     "@hookform/resolvers": "^5.4.0",
-    "@microsoft/applicationinsights-web": "^3.4.2",
+    "@sentry/react": "10.24.0",
     "@stomp/stompjs": "^7.3.0",
     "axios": "^1.14.0",
     "class-variance-authority": "^0.7.1",
