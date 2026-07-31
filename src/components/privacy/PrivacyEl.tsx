@@ -87,6 +87,7 @@ const PrivacyEl = () => {
                             <li><strong>Railway</strong> - φιλοξενία backend και βάσης δεδομένων (περιοχή EU West, Άμστερνταμ)</li>
                             <li><strong>Azure Static Web Apps</strong> - φιλοξενία frontend</li>
                             <li><strong>Azure Application Insights</strong> - τηλεμετρία απόδοσης και σφαλμάτων (ανώνυμη, χωρίς cookies)</li>
+                            <li><strong>Sentry (Functional Software Inc.)</strong> - παρακολούθηση σφαλμάτων εφαρμογής (χωρίς προσωπικά δεδομένα, χωρίς cookies). Τα δεδομένα φιλοξενούνται στην ΕΕ (Φρανκφούρτη). Νομική βάση: έννομο συμφέρον (ΓΚΠΔ Άρθρο 6(1)(στ)) για βελτίωση αξιοπιστίας υπηρεσίας.</li>
                         </ul>
                         <p className="text-sm text-slate-600 mt-2">
                             Όλα τα δεδομένα σας αποθηκεύονται και επεξεργάζονται εντός της Ευρωπαϊκής Ένωσης.

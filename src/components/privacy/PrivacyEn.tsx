@@ -84,6 +84,7 @@ const PrivacyEn = () => {
                             <li><strong>Railway</strong> - backend and database hosting (EU West region, Amsterdam)</li>
                             <li><strong>Azure Static Web Apps</strong> - frontend hosting</li>
                             <li><strong>Azure Application Insights</strong> - performance and error telemetry (anonymous, cookieless)</li>
+                            <li><strong>Sentry (Functional Software Inc.)</strong> - application error tracking (no PII, cookieless). Data hosted in the EU (Frankfurt). Legal basis: legitimate interest (GDPR Art. 6(1)(f)) for service reliability improvements.</li>
                         </ul>
                         <p className="text-sm text-slate-600 mt-2">
                             All your data is stored and processed within the European Union.
