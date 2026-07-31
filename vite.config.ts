@@ -33,6 +33,7 @@ export default defineConfig({
                     { src: '/roomies-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
                     { src: '/roomies-maskable-192.png', sizes: '192x192', type: 'image/png', purpose: 'maskable' },
                     { src: '/roomies-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+                    { src: '/roomies-badge-96.png', sizes: '96x96', type: 'image/png', purpose: 'monochrome' },
                 ],
             } as any,
             injectManifest: {

@@ -53,7 +53,7 @@ self.addEventListener('push', (event: PushEvent) => {
     const options: NotificationOptions = {
         body: 'New notification',
         icon: '/roomies-192.png',
-        badge: '/roomies-192.png',
+        badge: '/roomies-badge-96.png',
         tag: 'roommies-notification',
         data: { url: '/' },
     };
