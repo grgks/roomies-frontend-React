@@ -43,5 +43,5 @@ export const PRIVACY_POLICY_LAST_UPDATED = {
     en: "July 31, 2026",
 };
 
-export const APPLICATION_EMAIL = "roomies@example.com";
+export const APPLICATION_EMAIL = "theroomiesprod@outlook.com";
 export const CREATOR_GITHUB_URL = "github.com/grgks";
