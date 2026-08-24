@@ -1,4 +1,4 @@
-import {CREATOR_GITHUB_URL} from "@/utils/constants.ts";
+import {APPLICATION_EMAIL, CREATOR_GITHUB_URL} from "@/utils/constants.ts";
 
 const ContactEl = () => {
     return (
@@ -22,7 +22,7 @@ const ContactEl = () => {
                         </div>
                         <div>
                             <p className="text-sm font-semibold text-slate-700 group-hover:text-purple-600 transition">Email</p>
-                            <p className="text-xs text-slate-400">roomies@example.com</p>
+                            <p className="text-xs text-slate-400">{APPLICATION_EMAIL}</p>
                         </div>
                     </a>
 
