@@ -45,6 +45,7 @@ The app is installable on mobile and desktop as a PWA, works offline for its she
 - **Web Push notifications** - system-level browser notifications when the app is closed (Android, desktop, iOS as PWA)
 - **AI-powered house report** - on-demand summary of house activity via Google Gemini, with anonymized data (roommate names replaced before being sent to the AI), 24-hour cooldown cache
 - **House invitations** - invite, accept, cancel flows
+- **Roommate & House Discovery** - search for available rooms/ potential roommates
 - **Admin dashboard** - full house management with tabbed views (Roommates / Tasks / Expenses / Invitations), edit/change owner modals, roommates-without-house page, user management with activate/deactivate/reset password/hard-delete actions, all gated by `SUPER_ADMIN` role
 - **Bilingual** - full Greek & English support with runtime language switching
 - **Installable PWA** - add to home screen on Android / iOS, offline app shell
