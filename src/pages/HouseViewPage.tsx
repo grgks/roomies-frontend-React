@@ -12,9 +12,11 @@ import {handleLeaveHouse} from "@/services/houseService.ts";
 import {getAreaById} from "@/api/staticApi.ts";
 import { fetchAverageScores } from '@/services/ratingService';
 import SearchHousesPage from "@/pages/SearchHousesPage.tsx";
+import HousePhotoManager from '@/components/HousePhotoManager';
 import {useTranslation} from "react-i18next";
 import usePageTitle from "@/hooks/usePageTitle.ts";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
+import HousePhotoGallery from "@/components/HousePhotoGallery.tsx";
 
 const HouseViewPage = () => {
 
@@ -126,7 +128,11 @@ const HouseViewPage = () => {
                         </div>
                     </div>
 
+                    {/* House Photos - owner only */}
+                    {isOwner && <HousePhotoManager houseId={house.id} />}
+                    {!isOwner && <HousePhotoGallery houseId={house.id} />}
                     {/* Roommates Table */}
+
                     <PageTable
                         tableId="roommates-table"
                         title={t('roommates')}

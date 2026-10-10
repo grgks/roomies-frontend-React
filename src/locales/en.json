@@ -314,6 +314,13 @@
   "close": "Close",
   "markAllRead": "Mark all read",
   "unread": "Unread",
-  "locale": "en"
+  "locale": "en",
+  "photo": "Photo" ,
+  "noPhotos": "No photos available",
+  "housePhotos": "House Photos",
+  "addPhoto": "Add Photo",
+  "uploading": "Uploading...",
+  "deletePhoto": "Delete photo",
+  "maxPhotosReached": "You reached max photo added"
 
 }

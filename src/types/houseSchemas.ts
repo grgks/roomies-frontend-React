@@ -56,3 +56,13 @@ export const HouseFilters = PaginationParams.extend({
     cityId: z.number().int().optional(),
 });
 export type HouseFilters = z.infer<typeof HouseFilters>;
+
+// HousePhoto
+export const HousePhoto = z.object({
+    id: z.number().int(),
+    houseId: z.number().int(),
+    blobUrl: z.string(),
+    displayOrder: z.number().int(),
+    createdAt: z.iso.datetime(),
+});
+export type HousePhoto = z.infer<typeof HousePhoto>;

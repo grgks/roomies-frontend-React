@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import Layout from '@/components/Layout';
 import PageTable from '@/components/PageTable';
 import { Button } from '@/components/ui/button';
 import { searchHouses } from '@/api/houseApi';
+import HousePhotoGallery from '@/components/HousePhotoGallery';
 import {getMyOutgoingInvitations, sendInvitation} from '@/api/invitationApi';
 import type { House } from '@/types';
 import useAuth from '@/hooks/useAuth';
@@ -19,6 +20,7 @@ const SearchHousesPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [requestedHouseIds, setRequestedHouseIds] = useState<Set<number>>(new Set());
+    const [expandedHouseId, setExpandedHouseId] = useState<number | null>(null);
     const [sending, setSending] = useState<number | null>(null);
 
     const navigate = useNavigate();
@@ -88,10 +90,18 @@ const SearchHousesPage = () => {
                         emptyMessage={t('couldNotLoadAvailableHouses')}
                     >
                         {houses.map(house => (
-                            <tr key={house.id} id={`house-${house.id}`}>
-                                <td id={`house-address-${house.id}`} className="px-5 py-3 font-medium text-slate-700">
-                                    {house.address} {house.addressNumber}, {house.apartment}
-                                </td>
+                            <Fragment key={house.id}>
+                                <tr
+                                    id={`house-${house.id}`}
+                                    className="cursor-pointer hover:bg-slate-50 transition-colors"
+                                    onClick={() => setExpandedHouseId(prev => prev === house.id ? null : house.id)}
+                                >
+                                    <td id={`house-address-${house.id}`} className="px-5 py-3 font-medium text-slate-700">
+                                      <span className="mr-2 text-slate-400 inline-block transition-transform duration-200"
+                                        style={{ transform: expandedHouseId === house.id ? 'rotate(90deg)' : 'rotate(0deg)' }}>
+        ▶                              </span>
+                                        {house.address} {house.addressNumber}, {house.apartment}
+                                    </td>
                                 <td className="px-5 py-3 font-medium">
                                     {house.numOfRooms && house.currentRoommates !== undefined ? (
                                         <span className={
@@ -120,13 +130,24 @@ const SearchHousesPage = () => {
                                             id={`request-join-btn-${house.id}`}
                                             size="sm"
                                             disabled={sending === house.id}
-                                            onClick={() => handleRequestToJoin(house)}
+                                            onClick={(e) =>{
+                                                e.stopPropagation();
+                                                handleRequestToJoin(house);
+                                            }}
                                         >
                                             {sending === house.id ? t('sending') : t('requestToJoin')}
                                         </Button>
                                     )}
                                 </td>
-                            </tr>
+                                </tr>
+                                {expandedHouseId === house.id && (
+                                    <tr>
+                                        <td colSpan={6} className="bg-slate-50 border-t border-slate-200">
+                                            <HousePhotoGallery houseId={house.id} />
+                                        </td>
+                                    </tr>
+                                )}
+                            </Fragment>
                         ))}
                     </PageTable>
                     <div className="mt-14 flex gap-3 justify-between">
