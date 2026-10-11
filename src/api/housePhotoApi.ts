@@ -12,6 +12,9 @@ export const uploadHousePhoto = async (houseId: number, file: File): Promise<Hou
     const formData = new FormData();
     formData.append('file', file);
 
+    const photosBefore = await getHousePhotos(houseId);
+    const countBefore = photosBefore.length;
+
     const maxRetries = 3;
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
@@ -20,8 +23,12 @@ export const uploadHousePhoto = async (houseId: number, file: File): Promise<Hou
             });
             return res.data;
         } catch (error) {
+            // Check if upload actually succeeded despite network error
+            const photosNow = await getHousePhotos(houseId);
+            if (photosNow.length > countBefore) {
+                return photosNow[photosNow.length - 1];
+            }
             if (attempt === maxRetries) throw error;
-            // wait before retry (1s, 2s)
             await new Promise(r => setTimeout(r, attempt * 1000));
         }
     }
