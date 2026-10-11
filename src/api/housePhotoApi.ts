@@ -11,10 +11,21 @@ export const getHousePhotos = async (houseId: number): Promise<HousePhoto[]> => 
 export const uploadHousePhoto = async (houseId: number, file: File): Promise<HousePhoto> => {
     const formData = new FormData();
     formData.append('file', file);
-    const res = await axiosInstance.post(`/api/houses/${houseId}/photos`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return res.data;
+
+    const maxRetries = 3;
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const res = await axiosInstance.post(`/api/houses/${houseId}/photos`, formData, {
+                headers: { 'Content-Type': 'multipart/form-data' },
+            });
+            return res.data;
+        } catch (error) {
+            if (attempt === maxRetries) throw error;
+            // wait before retry (1s, 2s)
+            await new Promise(r => setTimeout(r, attempt * 1000));
+        }
+    }
+    throw new Error('Upload failed after retries');
 };
 
 // DELETE /api/houses/{houseId}/photos/{photoId} - delete photo (owner only)

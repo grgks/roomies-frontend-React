@@ -321,6 +321,7 @@
   "addPhoto": "Add Photo",
   "uploading": "Uploading...",
   "deletePhoto": "Delete photo",
-  "maxPhotosReached": "You reached max photo added"
+  "maxPhotosReached": "You reached max photo added",
+  "uploadFailed": "Upload Failed"
 
 }
