@@ -32,6 +32,7 @@ The app is installable on mobile and desktop as a PWA, works offline for its she
 | **PWA** | vite-plugin-pwa (`injectManifest` mode, custom service worker) |
 | **Telemetry** | Azure Application Insights (cookieless) |
 | **Push Notifications** | Web Push API + VAPID (via backend `jose4j` ES256) |
+| **Error Tracking** | Sentry (`@sentry/react`) |
 
 ---
 
@@ -49,6 +50,7 @@ The app is installable on mobile and desktop as a PWA, works offline for its she
 - **Admin dashboard** - full house management with tabbed views (Roommates / Tasks / Expenses / Invitations), edit/change owner modals, roommates-without-house page, user management with activate/deactivate/reset password/hard-delete actions, all gated by `SUPER_ADMIN` role
 - **Bilingual** - full Greek & English support with runtime language switching
 - **Installable PWA** - add to home screen on Android / iOS, offline app shell
+- **Bug reporting** ➤ in-app feedback widget via Sentry User Feedback SDK
 
 ---
 
@@ -147,14 +149,17 @@ npm run lint      # Run ESLint
 ```
 src/
 ├── api/            # HTTP call functions (network layer only)
-├── services/       # Business logic layer
+├── assets/         # Static assets (images, icons)
 ├── components/     # Reusable UI components
-├── pages/          # Route-level pages
+├── context/        # React Context providers (auth, notifications)
 ├── hooks/          # Custom React hooks
-├── schemas/        # Zod validation schemas
-├── i18n/           # Translation files (el / en)
-├── utils/          # Constants and helpers
-└── lib/            # Third-party integrations (App Insights, etc.)
+├── lib/            # Third-party integrations (App Insights, Sentry)
+├── locales/        # Translation files (el / en)
+├── pages/          # Route-level pages
+├── routes/         # React Router config + protected routes
+├── services/       # Business logic layer
+├── types/          # TypeScript interfaces, enums, Zod schemas
+└── utils/          # Constants and helpers
 ```
 
 ---
