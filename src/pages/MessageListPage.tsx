@@ -20,6 +20,7 @@ const MessageListPage = () => {
     const [loading, setLoading] = useState(true);
 
     const [unreadByRoommate, setUnreadByRoommate] = useState<Set<number>>(new Set());
+    const [hasUnreadHouse, setHasUnreadHouse] = useState(false);
 
     usePageTitle(t('messages'))
 
@@ -36,6 +37,12 @@ const MessageListPage = () => {
                     getMyUnreadMessage(),
                 ]);
                 setHouseMessages(msgs);
+                // Check for unread house messages
+                const lastSeenId = localStorage.getItem(`lastSeenHouseMsg_${houseId}`);
+                const latestMsg = msgs[msgs.length - 1];
+                if (latestMsg && (!lastSeenId || latestMsg.id > Number(lastSeenId))) {
+                    setHasUnreadHouse(true);
+                }
                 setRoommates(rms.filter(r => r.id !== roommateId));
                 const unreadIds = new Set(unread.map(m => m.senderId));
                 setUnreadByRoommate(unreadIds);
@@ -68,9 +75,15 @@ const MessageListPage = () => {
                     <h1 className="text-2xl font-bold text-slate-800">{t('messages')}</h1>
 
                     {/* House Chat */}
+
                     <div className="bg-white rounded-2xl shadow-md p-6 flex flex-col gap-4">
                         <div className="flex items-center justify-between">
-                            <h2 className="text-lg font-bold text-slate-800">🏠 {t('houseChat')}</h2>
+                            <div className="flex items-center gap-2">
+                                {hasUnreadHouse && (
+                                    <span className="w-2 h-2 rounded-full bg-indigo-500 shrink-0" />
+                                )}
+                                <h2 className="text-lg font-bold text-slate-800">🏠 {t('houseChat')}</h2>
+                            </div>
                             <SendMessageModal
                                 houseId={houseId}
                                 onMessageSent={msg => setHouseMessages(prev => [...prev, msg])}
