@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import { type ReactNode, useEffect, useRef } from "react";
+import { useTranslation } from 'react-i18next';
 
 interface PageTableProps {
     title: string;
@@ -10,6 +11,10 @@ interface PageTableProps {
     tableId?: string;
     maxHeight?: string;
     minWidth?: string;
+    // Infinite scroll
+    onLoadMore?: () => void;
+    hasMore?: boolean;
+    loadingMore?: boolean;
 }
 
 const colorMap = {
@@ -48,8 +53,27 @@ const PageTable = ({ title,
                        children,
                        tableId, maxHeight,
                        minWidth = "640px",
+                       onLoadMore, hasMore, loadingMore,
                    }: PageTableProps) => {
     const colors = colorMap[color];
+    const sentinelRef = useRef<HTMLDivElement>(null);
+    const scrollRef = useRef<HTMLDivElement>(null);
+    const { t } = useTranslation();
+
+    // IntersectionObserver: trigger onLoadMore when sentinel becomes visible
+    useEffect(() => {
+        if (!onLoadMore || !hasMore || loadingMore) return;
+        const sentinel = sentinelRef.current;
+        const root = scrollRef.current;
+        if (!sentinel || !root) return;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => { if (entry.isIntersecting) onLoadMore(); },
+            { root, threshold: 0.1 }
+        );
+        observer.observe(sentinel);
+        return () => observer.disconnect();
+    }, [onLoadMore, hasMore, loadingMore]);
 
     return (
         <div id={tableId} className="bg-white rounded-2xl shadow-md overflow-hidden">
@@ -60,6 +84,7 @@ const PageTable = ({ title,
                 <p className="text-slate-400 text-center py-8">{emptyMessage}</p>
             ) : (
                 <div
+                    ref={scrollRef}
                     className="overflow-x-auto"
                     style={{
                         maxHeight: maxHeight ?? undefined,
@@ -81,6 +106,15 @@ const PageTable = ({ title,
                         {children}
                         </tbody>
                     </table>
+
+                    {/* Sentinel for infinite scroll */}
+                    {hasMore && (
+                        <div ref={sentinelRef} className="flex justify-center py-3">
+                            {loadingMore && (
+                                <span className="text-sm text-slate-400">{t('loading')}...</span>
+                            )}
+                        </div>
+                    )}
                 </div>
             )}
         </div>

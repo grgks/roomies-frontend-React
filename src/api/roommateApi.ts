@@ -33,9 +33,9 @@ export const searchRoommates =
 
 //GET /api/roommate/search-for-invite - privacy-minimised search (no lastname), rating included
 export const searchRoommatesForInvite =
-    async(filters: RoommateFilters): Promise<PagedResponse<RoommateSearch>> => {
+    async(filters: RoommateFilters, page = 0): Promise<PagedResponse<RoommateSearch>> => {
         const res = await axiosInstance.get('/api/roommate/search-for-invite',
-            {params: filters});
+            {params: { ...filters, page }});
         return res.data;
     }
 
