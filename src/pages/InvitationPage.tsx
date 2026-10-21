@@ -44,6 +44,7 @@ const InvitationsPage = () => {
     const [selectedHouseRating, setSelectedHouseRating] = useState<number | null>(null);
     const [modalOpen, setModalOpen] = useState(false);
     const [isFull, setIsFull] = useState(false);
+    const [selectedHouseId, setSelectedHouseId] = useState<number | null>(null);
 
     usePageTitle(t('invitations'))
 
@@ -52,16 +53,11 @@ const InvitationsPage = () => {
 
             try {
                 const [inc, out] = await Promise.all([
-                    getMyIncomingInvitations({}),
-                    getMyOutgoingInvitations({}),
+                    getMyIncomingInvitations({ pageSize: 100 }),
+                    getMyOutgoingInvitations({ pageSize: 100 }),
                 ]);
-                setIncoming(inc);
-                setOutgoing(out);
-
-                if (houseId) {
-                    const myHouse = await getMyHouse();
-                    setHouseOwnerId(myHouse.ownerId);
-                }
+                setIncoming(inc.reverse());
+                setOutgoing(out.reverse());
 
                 if (houseId) {
                     const myHouse = await getMyHouse();
@@ -114,6 +110,8 @@ const InvitationsPage = () => {
     const handleOpenRatingModal = async (roommateId: number, name: string, invHouseId: number) => {
         setSelectedRoommate({ id: roommateId, firstname: name, lastname: '' } as Roommate);
         setModalOpen(true);
+        setSelectedHouseId(invHouseId);
+        setSelectedHouseId(invHouseId !== houseId ? invHouseId : null);
         try {
             const cats = await getAverageScoreForRoommateIdByCategory(roommateId);
             setCategoryScores(cats);
@@ -165,7 +163,7 @@ const InvitationsPage = () => {
                             columns={[ t('from'), t('house'), t('area'), "Status", "",""]}
                             isEmpty={incoming.length === 0}
                             emptyMessage={t('noIncomingInvitations')}
-                            maxHeight="300px"
+                            maxHeight="500px"
 
                         >
                             {incoming.map(inv => (
@@ -215,6 +213,8 @@ const InvitationsPage = () => {
                             lastname={selectedRoommate?.lastname}
                             categoryScores={categoryScores}
                             houseRating={selectedHouseRating}
+                            houseId={selectedHouseId}
+                            roommateId={selectedRoommate?.id ?? null}
                         />
 
                         {/* Outgoing */}
@@ -226,7 +226,7 @@ const InvitationsPage = () => {
                                 columns={[t('to'), t('house'), t('area'), "Status", ""]}
                                 isEmpty={outgoing.length === 0}
                                 emptyMessage={t('noOutgoingInvitations')}
-                                maxHeight="300px"
+                                maxHeight="500px"
 
                             >
                                 {outgoing.map(inv => (
