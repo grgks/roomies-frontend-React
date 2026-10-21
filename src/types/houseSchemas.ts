@@ -54,6 +54,13 @@ export const HouseFilters = PaginationParams.extend({
     roommateId: z.number().int().optional(),
     areaId: z.number().int().optional(),
     cityId: z.number().int().optional(),
+
+    // Profile-based filters
+    minBudget: z.number().optional(),
+    maxBudget: z.number().optional(),
+    requiresHeating: z.boolean().optional(),
+    requiresAirConditioning: z.boolean().optional(),
+    requiresFurnished: z.boolean().optional(),
 });
 export type HouseFilters = z.infer<typeof HouseFilters>;
 

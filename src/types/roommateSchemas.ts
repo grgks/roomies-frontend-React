@@ -56,5 +56,16 @@ export const RoommateFilters = z.object({
     lastname: z.string().optional(),
     gender: z.enum(Object.values(Gender) as [string, ...string[]]).optional(),
     houseId: z.number().int().optional(),
+
+    // Profile-based filters
+    noHouse: z.boolean().optional(),
+    activeAtSearch: z.boolean().optional(),
+    smoking: z.string().optional(),
+    hasPets: z.boolean().optional(),
+    noiseLevel: z.string().optional(),
+    visitors: z.string().optional(),
+    lgbtqFriendly: z.boolean().optional(),
+    minAge: z.number().int().optional(),
+    maxAge: z.number().int().optional(),
 });
 export type RoommateFilters = z.infer<typeof RoommateFilters>;
