@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import type { HouseProfile } from '@/types/searchSchemas';
 
 interface Props {
-    profile: HouseProfile | undefined;
+    profile: HouseProfile | null;
 }
 
 const HouseCharacteristics = ({ profile }: Props) => {

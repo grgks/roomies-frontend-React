@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import type { RoommateProfile } from '@/types/searchSchemas';
 
 interface Props {
-    profile: RoommateProfile | undefined;
+    profile: RoommateProfile | null;
 }
 
 // icon helpers
