@@ -13,6 +13,7 @@ import LoadingSpinner from '@/components/LoadSpinner';
 import {fetchHouseFormData, filterAreasByCity, submitCreateHouse} from "@/services/houseService.ts";
 import {useTranslation} from "react-i18next";
 import usePageTitle from "@/hooks/usePageTitle.ts";
+import HouseProfileForm from "@/components/search/HouseProfileForm.tsx";
 
 const CreateHousePage = () => {
 
@@ -25,6 +26,9 @@ const CreateHousePage = () => {
     const [filteredAreas, setFilteredAreas] = useState<Area[]>([]);
     const [selectedCityId, setSelectedCityId] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
+
+    // Step 2: after create, show HouseProfileForm
+    const [createdHouseId, setCreatedHouseId] = useState<number | null>(null);
 
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<HouseInsert>({
         resolver: zodResolver(HouseInsertSchema(t)) as never,
@@ -55,16 +59,44 @@ const CreateHousePage = () => {
 
     const onSubmit = async (data: HouseInsert) => {
         try {
-            await submitCreateHouse(data);
+            const house = await submitCreateHouse(data);
             await refreshAuth();
-            navigate('/dashboard');
+            //go to step 2: fill profile
+            setCreatedHouseId(house.id);
         } catch {
             //console.error('Could not create house');
         }
     };
 
+    const goToDashboard = () => navigate('/dashboard');
+
     if (loading) return <LoadingSpinner />;
 
+    // Step 2: House Profile Form (after create)
+    if (createdHouseId) {
+        return (
+            <Layout>
+                <div className="bg-slate-100 pb-16">
+                    <div className="bg-white rounded-2xl shadow-md p-8 w-full max-w-md mx-auto">
+                        <h1 className="text-2xl font-bold text-slate-800 mb-2">
+                            {t('houseProfileSetup')}
+                        </h1>
+                        <p className="text-sm text-slate-500 mb-4">
+                            {t('houseProfileSetupHint')}
+                        </p>
+                        <HouseProfileForm
+                            houseId={createdHouseId}
+                            onSuccess={goToDashboard}
+                            showSkip
+                            onSkip={goToDashboard}
+                        />
+                    </div>
+                </div>
+            </Layout>
+        );
+    }
+
+    // Step 1: Create House Form
     return (
         <Layout>
             <div className=" bg-slate-100 pb-16"

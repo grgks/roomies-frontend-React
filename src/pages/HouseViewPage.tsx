@@ -17,6 +17,9 @@ import {useTranslation} from "react-i18next";
 import usePageTitle from "@/hooks/usePageTitle.ts";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger} from '@/components/ui/dialog';
 import HousePhotoGallery from "@/components/HousePhotoGallery.tsx";
+import { getMyHouseProfile } from '@/api/searchApi';
+import HouseProfileForm from '@/components/search/HouseProfileForm';
+import type { HouseProfile } from '@/types/searchSchemas';
 
 const HouseViewPage = () => {
 
@@ -30,6 +33,14 @@ const HouseViewPage = () => {
     const [error, setError] = useState<string | null>(null);
     const [area, setArea] = useState<Area | null>(null);
     const [averageScores, setAverageScores] = useState<Record<number, number>>({});
+
+    // House profile state
+    const [houseProfile, setHouseProfile] = useState<HouseProfile | null>(null);
+    const [profileOpen, setProfileOpen] = useState(false);
+
+    // if never filled: all default (false/null)
+    const isProfileEmpty = !houseProfile
+        || (!houseProfile.rent && !houseProfile.hasHeating && !houseProfile.hasAirConditioning && !houseProfile.furnished);
 
     usePageTitle(t('myHouse'))
 
@@ -49,6 +60,14 @@ const HouseViewPage = () => {
                 setAverageScores(scores);
 
                 setArea(houseArea);
+
+                // load house profile
+                try {
+                    const profile = await getMyHouseProfile();
+                    setHouseProfile(profile);
+                } catch {
+                    // 404 = no profile yet
+                }
             } catch {
                 setError('Could not load house.');
             } finally {
@@ -70,6 +89,17 @@ const HouseViewPage = () => {
         } catch {
             setLeaving(false);
             //console.error('Could not leave house');
+        }
+    };
+
+    const handleProfileSuccess = async () => {
+        setProfileOpen(false);
+        // Reload profile for update state
+        try {
+            const profile = await getMyHouseProfile();
+            setHouseProfile(profile);
+        } catch {
+            // silent
         }
     };
 
@@ -126,9 +156,37 @@ const HouseViewPage = () => {
                                 </div>
                             )}
                         </div>
+
+                        {/* House Profile Button. owner only */}
+                        {isOwner && (
+                            <div className="mt-4 pt-4 border-t">
+                                <Dialog open={profileOpen} onOpenChange={setProfileOpen}>
+                                    <DialogTrigger asChild>
+                                        <button className="flex items-center gap-2 text-sm text-indigo-600 hover:text-indigo-800 transition cursor-pointer">
+                                            {isProfileEmpty && (
+                                                <span className="w-5 h-5 rounded-full bg-amber-400 text-white text-xs font-bold flex items-center justify-center">
+                                                    !
+                                                </span>
+                                            )}
+                                            {isProfileEmpty ? t('completeHouseProfile') : t('editHouseProfile')}
+                                        </button>
+                                    </DialogTrigger>
+                                    <DialogContent>
+                                        <DialogHeader>
+                                            <DialogTitle>{t('houseProfileSetup')}</DialogTitle>
+                                            <DialogDescription className="sr-only">{t('houseProfileSetup')}</DialogDescription>
+                                        </DialogHeader>
+                                        <HouseProfileForm
+                                            houseId={house.id}
+                                            onSuccess={handleProfileSuccess}
+                                        />
+                                    </DialogContent>
+                                </Dialog>
+                            </div>
+                        )}
                     </div>
 
-                    {/* House Photos - owner only */}
+                    {/* House Photos. owner only */}
                     {isOwner && <HousePhotoManager houseId={house.id} />}
                     {!isOwner && <HousePhotoGallery houseId={house.id} />}
                     {/* Roommates Table */}
