@@ -30,7 +30,7 @@ const AdminUsersPage = lazy(() => import('@/pages/AdminUsersPage'));
 const AdminDashboardPage = lazy(() => import('@/pages/AdminDashboardPage'));
 const AdminRoommatesWithoutHousePage = lazy(() => import('@/pages/AdminRoommatesWithoutHousePage'));
 const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'));
-
+const SearchProfileSetupPage = lazy(() => import('@/pages/SearchProfileSetupPage'));
 
 // if authenticated -> show component
 // if not -> go to /login , /NotFoundPage
@@ -65,6 +65,10 @@ const AppRouter = () => {
                 isAuthenticated ? <Navigate to="/dashboard" /> : <LoginPage />
             } />
             <Route path="/complete-profile" element={<ProfilePage />} />
+
+            <Route path="/setup-search-profile" element={
+                <ProtectedRoute><SearchProfileSetupPage /></ProtectedRoute>
+            } />
 
             {/* Protected */}
             <Route path="/dashboard" element={

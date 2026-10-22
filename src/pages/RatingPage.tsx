@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import {Button} from "@/components/ui/button.tsx";
 import {useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import PageTable from "@/components/PageTable.tsx";
 import type {Rating} from "@/types";
 import LoadSpinner from "@/components/LoadSpinner.tsx";
@@ -72,6 +72,22 @@ const RatingPage = () => {
     const uniqueRaters = new Set(receivedRatings.map(r => r.fromRoommateFullName)).size;
 
 
+    const groupByRoommate = (ratings: Rating[], nameKey: 'fromRoommateFullName' | 'toRoommateFullName') => {
+        const groups: Record<string, Rating[]> = {};
+        ratings.forEach(r => {
+            const name = r[nameKey];
+            if (!groups[name]) groups[name] = [];
+            groups[name].push(r);
+        });
+        return groups;
+    };
+
+    const scoreColor = (score: number) => {
+        if (score >= 4) return "text-green-600";
+        if (score >= 3) return "text-yellow-600";
+        return "text-red-500";
+    };
+
     return(
         <Layout>
             <div className="bg-teal-200 p-6 pb-16 min-h-screen">
@@ -86,7 +102,8 @@ const RatingPage = () => {
                      {overallScore && (
                          <div className="flex justify-between items-center bg-indigo-50 rounded-xl px-5 py-3 text-sm font-medium text-indigo-700">
                              <span>{t('overall')}</span>
-                             <span>{overallScore} ⭐ {t('from')} {uniqueRaters} {uniqueRaters !== 1 ? t('roommates') : t('roommate')}</span>                         </div>
+                             <span>{overallScore} ⭐ {t('from')} {uniqueRaters} {uniqueRaters !== 1 ? t('roommates') : t('roommate')}</span>
+                         </div>
                      )}
 
                     {/* My Ratings */}
@@ -100,16 +117,25 @@ const RatingPage = () => {
                         maxHeight="300px"
 
                     >
-                        {receivedRatings.map(rating => (
-                            <tr key={rating.id}>
-                                <td className="px-5 py-3 font-medium text-slate-700">{rating.fromRoommateFullName}</td>
-                                <td className="px-5 py-3 text-slate-500">{t(rating.category)}</td>
-                                <td className="px-5 py-3 text-slate-500">⭐ {rating.score}</td>
-                            </tr>
-                        ))}
-
+                        {Object.entries(groupByRoommate(receivedRatings, 'fromRoommateFullName')).map(([name, ratings]) => {
+                            const avg = ratings.reduce((s, r) => s + r.score, 0) / ratings.length;
+                            return (
+                                <Fragment key={name}>
+                                    <tr className="bg-indigo-50/50">
+                                        <td className="px-5 py-2 font-semibold text-slate-700" colSpan={2}>{name}</td>
+                                        <td className="px-5 py-2 font-semibold text-purple-700"> {t('avg')} {avg.toFixed(1)}</td>
+                                    </tr>
+                                    {ratings.map(rating => (
+                                        <tr key={rating.id}>
+                                            <td className="px-5 py-2"></td>
+                                            <td className="px-5 py-2 text-slate-500">{t(rating.category)}</td>
+                                            <td className={`px-5 py-2 font-medium ${scoreColor(rating.score)}`}>⭐ {rating.score}</td>
+                                        </tr>
+                                    ))}
+                                </Fragment>
+                            );
+                        })}
                     </PageTable>
-
                 </div>
 
 
@@ -125,13 +151,24 @@ const RatingPage = () => {
                         maxHeight="300px"
 
                     >
-                        {givenRatings.map(rating => (
-                            <tr key={rating.id}>
-                                <td className="px-5 py-3 font-medium text-slate-700">{rating.toRoommateFullName}</td>
-                                <td className="px-5 py-3 text-slate-500">{t(rating.category)}</td>
-                                <td className="px-5 py-3 text-slate-500">⭐ {rating.score}</td>
-                            </tr>
-                        ))}
+                        {Object.entries(groupByRoommate(givenRatings, 'toRoommateFullName')).map(([name, ratings]) => {
+                            const avg = ratings.reduce((s, r) => s + r.score, 0) / ratings.length;
+                            return (
+                                <>
+                                    <tr key={`header-${name}`} className="bg-indigo-50/50">
+                                        <td className="px-5 py-2 font-semibold text-slate-700" colSpan={2}>{name}</td>
+                                        <td className="px-5 py-2 font-semibold text-purple-700">{t('avg')} {avg.toFixed(1)}</td>
+                                    </tr>
+                                    {ratings.map(rating => (
+                                        <tr key={rating.id}>
+                                            <td className="px-5 py-2"></td>
+                                            <td className="px-5 py-2 text-slate-500">{t(rating.category)}</td>
+                                            <td className={`px-5 py-2 font-medium ${scoreColor(rating.score)}`}>⭐ {rating.score}</td>
+                                        </tr>
+                                    ))}
+                                </>
+                            );
+                        })}
                     </PageTable>
 
                     </div>

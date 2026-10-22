@@ -60,7 +60,7 @@ export function initSentry() {
         return;
     }
 
-    // Only initialize in production/staging Never in local dev
+    // Only initialize in production/staging Never in local dev(comment for local debugging)
     if (SENTRY_ENVIRONMENT === 'development') {
         console.info('[Sentry] Development environment. Error tracking disabled');
         return;
@@ -95,7 +95,7 @@ export function initSentry() {
             'Non-Error promise rejection captured',
         ],
 
-        //Only accept errors from our own scripts
+        // //Only accept errors from our own scripts(comment for local debugging)
         allowUrls: [
             /https?:\/\/(www\.)?theroommies\.gr/,
         ],
@@ -158,6 +158,19 @@ export function initSentry() {
             }
             return breadcrumb;
         },
+        // User Feedback widget
+        integrations: [
+            Sentry.feedbackIntegration({
+                colorScheme: 'system',
+                isNameRequired: false,
+                isEmailRequired: false,
+                buttonLabel: 'Report a Bug',
+                submitButtonLabel: 'Send',
+                formTitle: 'Report a Bug',
+                messagePlaceholder: 'Describe what happened...',
+                successMessageText: 'Thank you for your feedback!',
+            }),
+        ],
     });
 
     console.info(`[Sentry] Initialized in ${SENTRY_ENVIRONMENT} mode`);

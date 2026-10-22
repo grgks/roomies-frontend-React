@@ -31,6 +31,10 @@ const MessageViewPage = () => {
                 if (isHouseChat && houseId) {
                     const msgs = await getMessagesByHouseId(houseId);
                     setMessages(msgs);
+                    // Mark house messages as seen
+                    if (msgs.length > 0) {
+                        localStorage.setItem(`lastSeenHouseMsg_${houseId}`, String(msgs[msgs.length - 1].id));
+                    }
                 } else if (targetRoommateId) {
                     const [sent, received] = await Promise.all([
                         getMySentMessage(),

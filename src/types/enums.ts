@@ -60,3 +60,51 @@ export const RatingCategory = {
     COMMUNICATION: 'COMMUNICATION',
 } as const;
 export type RatingCategory = typeof RatingCategory[keyof typeof RatingCategory];
+
+
+// SmokingPreference
+export const SmokingPreference = {
+    YES: 'YES',
+    NO: 'NO',
+    OUTDOORS_ONLY: 'OUTDOORS_ONLY',
+    NO_PREFERENCE: 'NO_PREFERENCE',
+} as const;
+export type SmokingPreference = typeof SmokingPreference[keyof typeof SmokingPreference];
+
+
+// PetPreference
+export const PetPreference = {
+    YES: 'YES',
+    NO: 'NO',
+    NO_PREFERENCE: 'NO_PREFERENCE',
+} as const;
+export type PetPreference = typeof PetPreference[keyof typeof PetPreference];
+
+
+// NoiseLevel
+export const NoiseLevel = {
+    QUIET: 'QUIET',
+    MODERATE: 'MODERATE',
+    LOUD: 'LOUD',
+    NO_PREFERENCE: 'NO_PREFERENCE',
+} as const;
+export type NoiseLevel = typeof NoiseLevel[keyof typeof NoiseLevel];
+
+
+// VisitorFrequency
+export const VisitorFrequency = {
+    RARELY: 'RARELY',
+    SOMETIMES: 'SOMETIMES',
+    OFTEN: 'OFTEN',
+    NO_PREFERENCE: 'NO_PREFERENCE',
+} as const;
+export type VisitorFrequency = typeof VisitorFrequency[keyof typeof VisitorFrequency];
+
+
+// GenderPreference
+export const GenderPreference = {
+    MALE: 'MALE',
+    FEMALE: 'FEMALE',
+    NO_PREFERENCE: 'NO_PREFERENCE',
+} as const;
+export type GenderPreference = typeof GenderPreference[keyof typeof GenderPreference];
