@@ -33,6 +33,7 @@ import { Gender } from '@/types/enums';
 import { RoommateUpdateSchema } from '@/types';
 import type { Roommate, RoommateUpdate } from '@/types';
 import {Link} from "react-router";
+import SearchSettingsSection from '@/components/search/SearchSettingsSection';
 // import ConfirmDeleteModal from "@/components/ConfirmDeleteModal.tsx";
 
 
@@ -403,6 +404,8 @@ const SettingsModal = () => {
                             </form>
                         )}
                     </div>
+
+                    <SearchSettingsSection />
 
                     {/* Language */}
                     <div className="flex items-center justify-between py-2">
