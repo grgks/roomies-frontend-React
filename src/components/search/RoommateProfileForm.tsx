@@ -68,7 +68,7 @@ const RoommateProfileForm = ({ onSuccess }: RoommateProfileFormProps) => {
                     className="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-purple-400"
                 >
                     <option value="">{t('select')}</option>
-                    {Object.values(SmokingPreference).map((v) => (
+                    {Object.values(SmokingPreference).filter(v => v !== 'NO_PREFERENCE').map((v) => (
                         <option key={v} value={v}>{t(v)}</option>
                     ))}
                 </select>
@@ -83,7 +83,7 @@ const RoommateProfileForm = ({ onSuccess }: RoommateProfileFormProps) => {
                     className="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-purple-400"
                 >
                     <option value="">{t('select')}</option>
-                    {Object.values(NoiseLevel).map((v) => (
+                    {Object.values(NoiseLevel).filter(v => v !== 'NO_PREFERENCE').map((v) => (
                         <option key={v} value={v}>{t(v)}</option>
                     ))}
                 </select>
@@ -98,7 +98,7 @@ const RoommateProfileForm = ({ onSuccess }: RoommateProfileFormProps) => {
                     className="w-full border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-purple-400"
                 >
                     <option value="">{t('select')}</option>
-                    {Object.values(VisitorFrequency).map((v) => (
+                    {Object.values(VisitorFrequency).filter(v => v !== 'NO_PREFERENCE').map((v) => (
                         <option key={v} value={v}>{t(v)}</option>
                     ))}
                 </select>
