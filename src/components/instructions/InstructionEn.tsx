@@ -11,7 +11,7 @@ const InstructionEn = () => {
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold text-slate-800">Instructions</h1>
                     <p className="text-sm text-slate-400 mt-1">
-                        Last updated: {PRIVACY_POLICY_LAST_UPDATED.el}
+                        Last updated: {PRIVACY_POLICY_LAST_UPDATED.en}
                     </p>
                 </div>
 
@@ -93,6 +93,8 @@ const InstructionEn = () => {
                         </p>
                         <ul className="flex flex-col gap-1 text-sm text-slate-600 list-disc list-inside">
                             <li>If you are the house owner and have an available room, you can invite roommates.</li>
+                            <li>Search for roommates using filters (smoking, pets, noise level, visitors, age). Your saved preferences are pre-filled automatically.</li>
+                            <li>View each candidate's characteristics through icons.</li>
                             <li>View your incoming invitations.</li>
                             <li>View your outgoing invitations.</li>
                             <li>Check the status of all invitations.</li>
@@ -108,6 +110,8 @@ const InstructionEn = () => {
                             <li>View house information (address, number of rooms, area, and city).</li>
                             <li>View information about your roommates if you are living in a house.</li>
                             <li>If you are not currently living in a house, you can send requests to houses with available rooms.</li>
+                            <li>Filter houses by city, area, rent budget, heating, air conditioning, and furnishing. Your saved preferences are pre-filled automatically.</li>
+                            <li>View each house's characteristics through icons.</li>
                             <li>If you are not currently living in a house, you can also view the current average rating of Roommates being that time to each house.</li>
                         </ul>
                     </section>
