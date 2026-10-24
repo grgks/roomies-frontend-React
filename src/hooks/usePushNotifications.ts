@@ -35,10 +35,25 @@ export const usePushNotifications = () => {
 
             // Subscribe to push service
 
-            const subscription = await registration.pushManager.subscribe({
-                userVisibleOnly: true,
-                applicationServerKey: vapidKey,
-            });
+            let subscription;
+            try {
+                subscription = await registration.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: vapidKey,
+                });
+            } catch (err) {
+                // VAPID key changed. Unsubscribe old, resubscribe with new key
+                if (err instanceof DOMException && err.name === 'InvalidStateError') {
+                    const existing = await registration.pushManager.getSubscription();
+                    if (existing) await existing.unsubscribe();
+                    subscription = await registration.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey: vapidKey,
+                    });
+                } else {
+                    throw err;
+                }
+            }
 
             // Send subscription to our backend
             await subscribePush(subscription);
