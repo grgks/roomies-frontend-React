@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roomies — Offline</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(30, 27, 46, 0.95);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #e2e8f0;
+            padding: 24px;
+        }
+        .container { text-align: center; max-width: 400px; }
+        .logo { height: 80px; width: 160px; border-radius: 8px; margin-bottom: 24px; }
+        h1 { font-size: 24px; font-weight: 700; color: #d8b4fe; margin-bottom: 12px; }
+        p { font-size: 14px; color: #94a3b8; line-height: 1.6; }
+        .animation { margin-top: 32px; position: relative; height: 48px; overflow: hidden; }
+        .dino { position: absolute; font-size: 30px; animation: run 3s linear infinite; transform: scaleX(-1); }
+        .bits { position: absolute; font-size: 14px; animation: bits 3s linear infinite; }
+        @keyframes run { 0% { left: -10%; } 100% { left: 85%; } }
+        @keyframes bits { 0% { left: 30%; opacity: 1; } 100% { left: 95%; opacity: 0; } }
+    </style>
+</head>
+<body>
+<div class="container">
+    <img src="/roomies.png" alt="Roomies" class="logo" />
+    <h1>You're offline</h1>
+    <p>No internet connection. Your data is safe. Reconnect and the app will resume automatically.</p>
+    <div class="animation">
+        <div class="dino">🦖</div>
+        <div class="bits">📶 📡 📶 📡</div>
+    </div>
+</div>
+</body>
+</html>

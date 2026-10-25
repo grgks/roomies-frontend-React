@@ -386,6 +386,8 @@
   "houseProfileSetupHint": "Add details about your house so roommates can find it easier",
   "completeHouseProfile": "Complete house profile",
   "editHouseProfile": "Edit house profile",
-  "avg": "Avg: "
+  "avg": "Avg: ",
+  "offlineTitle": "You're offline",
+  "offlineMessage": "No internet connection. Your data is safe. Reconnect and the app will resume automatically."
 
 }

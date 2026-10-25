@@ -11,7 +11,10 @@ precacheAndRoute(self.__WB_MANIFEST);
 cleanupOutdatedCaches();
 
 // Skip waiting + claim clients
-self.addEventListener('install', () => {
+self.addEventListener('install', (event: ExtendableEvent) => {
+    event.waitUntil(
+        caches.open('offline-v1').then((cache) => cache.add('/offline.html'))
+    );
     self.skipWaiting();
 });
 
