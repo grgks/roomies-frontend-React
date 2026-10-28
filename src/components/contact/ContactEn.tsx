@@ -15,7 +15,7 @@ const ContactEn = () => {
                 {/* Cards */}
                 <div className="flex flex-col gap-4">
 
-                    <a href="mailto:roomies@gmail.com"
+                    <a href={`mailto:${APPLICATION_EMAIL}`}
                        className="flex items-center gap-4 p-4 bg-white rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition group" aria-label="Email">
                         <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 text-lg">
                             ✉️
