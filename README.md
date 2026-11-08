@@ -83,6 +83,9 @@ Security was a first-class concern throughout:
 - **EU data residency** - all services hosted in the EU (Amsterdam) region
 - **Additional headers** - `X-Content-Type-Options`, `Cross-Origin-Opener-Policy`, `Referrer-Policy`
 - **Password strength enforcement** - client-side Zod rules match Keycloak server-side password policy (minimum length, upper/lower/digit/special character), so users get instant feedback that mirrors what the backend will actually accept
+
+
+> For the full STRIDE Threat Model & Risk Analysis, see the [backend repository](https://github.com/grgks/roomies-RestAPI/blob/main/docs/THREAT-MODEL.md). ➡️(currently private)
 ---
 
 ## 📱 PWA
