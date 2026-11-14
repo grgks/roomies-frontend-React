@@ -85,7 +85,7 @@ Security was a first-class concern throughout:
 - **Password strength enforcement** - client-side Zod rules match Keycloak server-side password policy (minimum length, upper/lower/digit/special character), so users get instant feedback that mirrors what the backend will actually accept
 
 
-> For the full STRIDE Threat Model & Risk Analysis, see the [backend repository](https://github.com/grgks/roomies-RestAPI/blob/main/docs/THREAT-MODEL.md). ➡️(currently private)
+> For the full STRIDE Threat Model & Risk Analysis, see the [backend showcase](https://github.com/grgks/roommies-back-showcase#security). ➡️(original currently private)
 ---
 
 ## 📱 PWA
@@ -112,7 +112,7 @@ The app is a fully installable Progressive Web App:
 ### Prerequisites
 
 - **Node.js** 20+ and npm (Node 22 LTS recommended)
-- A running instance of the [Roomies backend API](https://github.com/grgks/roomies-RestAPI) + Keycloak (see environment variables below)
+- A running instance of the Roomies backend API ([***SHOWCASE*** 🔍original currently private](https://github.com/grgks/roommies-back-showcase)) + Keycloak (see environment variables below)
 ### Installation
 
 ```bash
